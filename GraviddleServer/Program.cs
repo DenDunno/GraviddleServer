@@ -1,13 +1,16 @@
+using GraviddleServer.ChatRepository;
 using GraviddleServer.TelegramBot;
+using GraviddleServer.Level;
 using GraviddleServer;
 
 WebApplication app = WebApplication.Create(args);
-TelegramBotStartup telegramBotStartup = new();
-Endpoints endpoints = new();
+TelegramBot telegramBot = new("Password", new SessionChatsRepository());
+INotification notification = new TelegramBotNotification(telegramBot.Bridge);
+Endpoints endpoints = new(notification);
 
 app.MapGet("/", endpoints.Greet);
-app.MapPost("/{input}", endpoints.PostLevelResult);
+app.MapPost("/{levelResult}", endpoints.PostLevelResult);
 app.MapGet("/all", endpoints.GetAllRecords);
 
-telegramBotStartup.Run();
+telegramBot.Run();
 app.Run();

@@ -1,23 +1,21 @@
 using Telegram.Bot;
 using Telegram.Bot.Types;
-using Telegram.Bot.Types.Enums;
-
 namespace GraviddleServer.TelegramBot;
 
 public class TelegramBotRouter
 {
-    private readonly TelegramBotBridge _bridge;
+    private readonly IEnumerable<IRouterBranch> _routerBranches;
 
-    public TelegramBotRouter(TelegramBotBridge bridge)
+    public TelegramBotRouter(IEnumerable<IRouterBranch> routerBranches)
     {
-        _bridge = bridge;
+        _routerBranches = routerBranches;
     }
 
     public async Task HandleInput(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
     {
-        if (update.Type == UpdateType.Message)
+        foreach (IRouterBranch routerBranch in _routerBranches)
         {
-            await _bridge.SendMessage($"You said = {update.Message!.Text}", update.Message.Chat.Id, cancellationToken);
+            await routerBranch.Handle(update, cancellationToken);
         }
     }
 
