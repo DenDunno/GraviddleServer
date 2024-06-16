@@ -1,5 +1,6 @@
 using GraviddleServer.Level;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 namespace GraviddleServer;
 
 [ApiController]
@@ -17,12 +18,13 @@ public class Endpoints : ControllerBase
         return "Hey there, what are doing here?";
     }
 
-    public string PostLevelResult(LevelResult levelResult)
+    public string PostLevelResult(string levelResultJson)
     {
-        string recordText = levelResult.ToString();
-        _notification.Notify(recordText);
-
-        return recordText;
+        LevelResult levelResult = JsonConvert.DeserializeObject<LevelResult>(levelResultJson)!;
+        string levelResultRecord = levelResult.ToString();
+        _notification.Notify(levelResultRecord);
+        
+        return levelResultRecord;
     }
 
     public string GetAllRecords()

@@ -26,4 +26,10 @@ public class TelegramBotBridge
 
         await Task.WhenAll(tasks);
     }
+
+    public async Task<Chat[]> GetChats(IEnumerable<long> chatIds)
+    {
+        IEnumerable<Task<Chat>> tasks = chatIds.Select(id => _client.GetChatAsync(id));
+        return await Task.WhenAll(tasks);
+    }
 }

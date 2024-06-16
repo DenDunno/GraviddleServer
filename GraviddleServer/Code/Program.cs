@@ -9,7 +9,7 @@ INotification notification = new TelegramBotNotification(telegramBot.Bridge);
 Endpoints endpoints = new(notification);
 
 app.MapGet("/", endpoints.Greet);
-app.MapPost("/{levelResult}", endpoints.PostLevelResult);
+app.MapGet("/{levelResultJson}", endpoints.PostLevelResult);
 app.MapGet("/all", endpoints.GetAllRecords);
 
 telegramBot.Run();
