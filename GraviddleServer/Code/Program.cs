@@ -1,20 +1,14 @@
-using GraviddleServer.ChatRepository;
 using GraviddleServer.Code;
-using GraviddleServer.Code.GraviddleDatabase;
-using GraviddleServer.Code.Level;
-using GraviddleServer.Code.TelegramBot;
+using GraviddleServer.Code.API;
+using GraviddleServer.Code.Repository;
+using GraviddleServer.Code.TelegramBotNM;
 
-WebApplication app = WebApplication.Create(args);
-TelegramBot telegramBot = new("Password", new SessionChatsRepository());
+MsSqlDatabaseBridge bridge = new(@"Connection");
+TelegramBot telegramBot = CompositionRoot.CreateTelegramBot(bridge);
 INotification notification = new TelegramBotNotification(telegramBot.Bridge);
-Endpoints endpoints = new(notification);
-Database database = new(@"ConnectionString");
+WebApplication app = CompositionRoot.CreateWebApplication(notification, bridge);
 
-app.MapGet("/", endpoints.Greet);
-app.MapGet("/{levelResultJson}", endpoints.PostLevelResult);
-app.MapGet("/all", endpoints.GetAllRecords);
-
-database.Open();
+bridge.Open();
 telegramBot.Run();
 app.Run();
-database.Dispose();
+bridge.Dispose();
