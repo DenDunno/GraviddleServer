@@ -1,4 +1,4 @@
-namespace GraviddleServer.TelegramBot;
+namespace GraviddleServer.Code.TelegramBot.Commands;
 
 public interface IBotCommand<in T>
 {

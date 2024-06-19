@@ -1,16 +1,17 @@
 using GraviddleServer.ChatRepository;
 using Telegram.Bot;
 using Telegram.Bot.Types;
-namespace GraviddleServer.TelegramBot;
+
+namespace GraviddleServer.Code.TelegramBot;
 
 public class TelegramBotBridge
 {
     private readonly ITelegramBotClient _client;
-    private readonly IChatsDump _chatsDump;
+    private readonly IChatsDump _dump;
 
-    public TelegramBotBridge(ITelegramBotClient client, IChatsDump chatsDump)
+    public TelegramBotBridge(ITelegramBotClient client, IChatsDump dump)
     {
-        _chatsDump = chatsDump;
+        _dump = dump;
         _client = client;
     }
     
@@ -21,7 +22,7 @@ public class TelegramBotBridge
 
     public async Task SendToAll(string text)
     {
-        IEnumerable<long> chats = _chatsDump.GetAllChats();
+        IEnumerable<long> chats = _dump.GetAllChats();
         IEnumerable<Task<Message>> tasks = chats.Select(chatId => _client.SendTextMessageAsync(chatId, text));
 
         await Task.WhenAll(tasks);

@@ -1,6 +1,6 @@
 using Telegram.Bot.Types;
 
-namespace GraviddleServer.Utils;
+namespace GraviddleServer.Code.Utils;
 
 public static class ChatExtensions
 {

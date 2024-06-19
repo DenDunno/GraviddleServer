@@ -1,5 +1,6 @@
 using Telegram.Bot.Types;
-namespace GraviddleServer.TelegramBot;
+
+namespace GraviddleServer.Code.TelegramBot.Router;
 
 public interface IRouterBranch
 {

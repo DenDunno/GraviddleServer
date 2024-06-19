@@ -1,5 +1,6 @@
 using Telegram.Bot.Types.Enums;
-namespace GraviddleServer.TelegramBot.MemberStatusCommands;
+
+namespace GraviddleServer.Code.TelegramBot.Commands.MemberStatusCommands;
 
 public interface IMemberStatusCommand : IBotCommand<ChatMemberStatus>
 {

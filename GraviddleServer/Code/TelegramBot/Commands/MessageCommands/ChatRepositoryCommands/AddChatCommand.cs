@@ -1,19 +1,19 @@
 using GraviddleServer.ChatRepository;
-using GraviddleServer.TelegramBot.Commands;
-namespace GraviddleServer.TelegramBot;
+
+namespace GraviddleServer.Code.TelegramBot.Commands.MessageCommands.ChatRepositoryCommands;
 
 public class AddChatCommand : IMessageCommand
 {
-    private readonly IChatsRepository _chatsRepository;
+    private readonly IChatsRepository _repository;
 
-    public AddChatCommand(IChatsRepository chatsRepository)
+    public AddChatCommand(IChatsRepository repository)
     {
-        _chatsRepository = chatsRepository;
+        _repository = repository;
     }
 
     public Task Handle(long chatId, CancellationToken token)
     {
-        _chatsRepository.TryAdd(chatId);
+        _repository.TryAdd(chatId);
         return Task.CompletedTask;
     }
 }

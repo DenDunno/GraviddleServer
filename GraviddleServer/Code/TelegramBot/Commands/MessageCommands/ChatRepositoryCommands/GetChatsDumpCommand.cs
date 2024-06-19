@@ -1,25 +1,24 @@
 using System.Text;
 using GraviddleServer.ChatRepository;
-using GraviddleServer.TelegramBot.Commands;
-using GraviddleServer.Utils;
+using GraviddleServer.Code.Utils;
 using Telegram.Bot.Types;
 
-namespace GraviddleServer.TelegramBot;
+namespace GraviddleServer.Code.TelegramBot.Commands.MessageCommands.ChatRepositoryCommands;
 
 public class GetChatsDumpCommand : IMessageCommand
 {
-    private readonly IChatsRepository _chatsRepository;
+    private readonly IChatsRepository _repository;
     private readonly TelegramBotBridge _bridge;
     
-    public GetChatsDumpCommand(IChatsRepository chatsRepository, TelegramBotBridge bridge)
+    public GetChatsDumpCommand(IChatsRepository repository, TelegramBotBridge bridge)
     {
-        _chatsRepository = chatsRepository;
+        _repository = repository;
         _bridge = bridge;
     }
     
     public async Task Handle(long chatId, CancellationToken token)
     {
-        IEnumerable<long> chatsId = _chatsRepository.GetAllChats();
+        IEnumerable<long> chatsId = _repository.GetAllChats();
         string chatsRecord = await GetChatsRecord(chatsId);
         await _bridge.SendMessage(chatsRecord, chatId, token);
     }

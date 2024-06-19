@@ -1,20 +1,20 @@
-using GraviddleServer.ChatRepository;
-using GraviddleServer.TelegramBot.Commands;
 
-namespace GraviddleServer.TelegramBot;
+using GraviddleServer.ChatRepository;
+
+namespace GraviddleServer.Code.TelegramBot.Commands.MessageCommands.ChatRepositoryCommands;
 
 public class RemoveChatCommand : IMessageCommand
 {
-    private readonly IChatsRepository _chatsRepository;
+    private readonly IChatsRepository _repository;
 
-    public RemoveChatCommand(IChatsRepository chatsRepository)
+    public RemoveChatCommand(IChatsRepository repository)
     {
-        _chatsRepository = chatsRepository;
+        _repository = repository;
     }
 
     public Task Handle(long chatId, CancellationToken token)
     {
-        _chatsRepository.TryRemove(chatId);
+        _repository.TryRemove(chatId);
         return Task.CompletedTask;
     }
 }

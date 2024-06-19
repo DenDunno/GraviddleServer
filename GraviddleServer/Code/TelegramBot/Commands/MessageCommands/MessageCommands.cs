@@ -1,4 +1,4 @@
-namespace GraviddleServer.TelegramBot.Commands;
+namespace GraviddleServer.Code.TelegramBot.Commands.MessageCommands;
 
 public static class MessageCommands
 {

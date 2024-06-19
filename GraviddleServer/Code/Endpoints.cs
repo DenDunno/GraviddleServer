@@ -1,7 +1,8 @@
-using GraviddleServer.Level;
+using GraviddleServer.Code.Level;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-namespace GraviddleServer;
+
+namespace GraviddleServer.Code;
 
 [ApiController]
 public class Endpoints : ControllerBase

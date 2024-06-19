@@ -1,7 +1,8 @@
+using GraviddleServer.Code.TelegramBot.Commands;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 
-namespace GraviddleServer.TelegramBot;
+namespace GraviddleServer.Code.TelegramBot.Router;
 
 public class MessageCommandsRouterBranch : RouterBranch<long, string>
 {

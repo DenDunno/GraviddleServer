@@ -1,9 +1,12 @@
 using GraviddleServer.ChatRepository;
-using GraviddleServer.TelegramBot.Commands;
+using GraviddleServer.Code.TelegramBot.Commands;
+using GraviddleServer.Code.TelegramBot.Commands.MessageCommands;
+using GraviddleServer.Code.TelegramBot.Commands.MessageCommands.ChatRepositoryCommands;
+using GraviddleServer.Code.TelegramBot.Router;
 using Telegram.Bot;
 using Telegram.Bot.Types.Enums;
 
-namespace GraviddleServer.TelegramBot;
+namespace GraviddleServer.Code.TelegramBot;
 
 public class TelegramBot
 {
@@ -11,22 +14,22 @@ public class TelegramBot
     private readonly TelegramBotRouter _router;
     private readonly ITelegramBotClient _client;
 
-    public TelegramBot(string token, IChatsRepository chatsRepository)
+    public TelegramBot(string token, IChatsRepository repository)
     {
         _client = new TelegramBotClient(token);
-        Bridge = new TelegramBotBridge(_client, chatsRepository);
+        Bridge = new TelegramBotBridge(_client, repository);
         _router = new TelegramBotRouter(new IRouterBranch[]
         {
             new MessageCommandsRouterBranch(new Dictionary<string, IBotCommand<long>>()
             {
-                { MessageCommands.Start, new AddChatCommand(chatsRepository) },
-                { MessageCommands.Stop, new RemoveChatCommand(chatsRepository) },
-                { MessageCommands.ChatsDump, new GetChatsDumpCommand(chatsRepository, Bridge) },
+                { MessageCommands.Start, new AddChatCommand(repository) },
+                { MessageCommands.Stop, new RemoveChatCommand(repository) },
+                { MessageCommands.ChatsDump, new GetChatsDumpCommand(repository, Bridge) },
             }),
 
             new MemberStatusRouterBranch(new Dictionary<ChatMemberStatus, IBotCommand<long>>()
             {
-                { ChatMemberStatus.Kicked, new RemoveChatCommand(chatsRepository) }
+                { ChatMemberStatus.Kicked, new RemoveChatCommand(repository) }
             })
         });
     }

@@ -1,4 +1,4 @@
-namespace GraviddleServer.Level;
+namespace GraviddleServer.Code.Level;
 
 public interface INotification
 {

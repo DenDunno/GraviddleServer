@@ -1,4 +1,4 @@
-namespace GraviddleServer.Utils;
+namespace GraviddleServer.Code.Utils;
 
 public static class EnumerableExtensions
 {

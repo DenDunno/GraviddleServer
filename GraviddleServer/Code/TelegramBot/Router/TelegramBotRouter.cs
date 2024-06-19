@@ -1,6 +1,7 @@
 using Telegram.Bot;
 using Telegram.Bot.Types;
-namespace GraviddleServer.TelegramBot;
+
+namespace GraviddleServer.Code.TelegramBot.Router;
 
 public class TelegramBotRouter
 {

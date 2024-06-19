@@ -1,5 +1,6 @@
-using GraviddleServer.Level;
-namespace GraviddleServer.TelegramBot;
+using GraviddleServer.Code.Level;
+
+namespace GraviddleServer.Code.TelegramBot;
 
 public class TelegramBotNotification : INotification
 {
