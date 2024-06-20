@@ -3,8 +3,9 @@ using GraviddleServer.Code.API;
 using GraviddleServer.Code.Repository;
 using GraviddleServer.Code.TelegramBotNM;
 
-MsSqlDatabaseBridge bridge = new(@"Connection");
-TelegramBot telegramBot = CompositionRoot.CreateTelegramBot(bridge);
+SecureData secureData = CompositionRoot.FetchSecureData();
+MsSqlDatabaseBridge bridge = new(secureData.DatabaseConnectionString);
+TelegramBot telegramBot = CompositionRoot.CreateTelegramBot(bridge, secureData);
 INotification notification = new TelegramBotNotification(telegramBot.Bridge);
 WebApplication app = CompositionRoot.CreateWebApplication(notification, bridge);
 

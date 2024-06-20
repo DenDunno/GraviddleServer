@@ -12,11 +12,10 @@ public class LevelRecord
 
     public override string ToString()
     {
-        return $"DeviceId = {DeviceId}\n" +
-               $"Name = {Name}\n" +
+        return $"Name = {Name}\n" +
                $"Level = {Level}\n" +
                $"Stars = {Stars}\n" +
-               $"Time in sec = {Time}\n" +
+               $"Time in sec = {Math.Round(Time, 1)}\n" +
                $"Number of deaths = {DeathCount}\n";
     }
 }

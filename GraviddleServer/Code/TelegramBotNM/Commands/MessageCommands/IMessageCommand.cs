@@ -1,5 +1,7 @@
+using Telegram.Bot.Types;
+
 namespace GraviddleServer.Code.TelegramBotNM.Commands.MessageCommands;
 
-public interface IMessageCommand : IBotCommand<long>
+public interface IMessageCommand : IBotCommand<Message>
 {
 }

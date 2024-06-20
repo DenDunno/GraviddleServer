@@ -16,11 +16,11 @@ public class GetChatsDumpCommand : IMessageCommand
         _bridge = bridge;
     }
     
-    public async Task Handle(long chatId, CancellationToken token)
+    public async Task Handle(Message message, CancellationToken token)
     {
         IEnumerable<long> chatsId = _chatsDump.GetAll();
         string chatsRecord = await GetChatsRecord(chatsId);
-        await _bridge.SendMessage(chatsRecord, chatId, token);
+        await _bridge.SendMessage(chatsRecord, message.Chat.Id, token);
     }
 
     private async Task<string> GetChatsRecord(IEnumerable<long> chatsId)

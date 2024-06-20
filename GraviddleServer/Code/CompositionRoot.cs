@@ -6,14 +6,22 @@ using GraviddleServer.Code.TelegramBotNM;
 
 namespace GraviddleServer.Code;
 
-public class CompositionRoot
+public abstract class CompositionRoot
 {
-    public static TelegramBot CreateTelegramBot(MsSqlDatabaseBridge bridge)
+    public static SecureData FetchSecureData()
+    {
+        return new SecureData(
+            databaseConnectionString: @"",
+            telegramBotToken: "",
+            adminPassword: "");
+    }
+    
+    public static TelegramBot CreateTelegramBot(MsSqlDatabaseBridge bridge, SecureData secureData)
     {
         MsSqlRepository<long> msSqlRepository = new(bridge, new ChatQueries(), new ChatIdParser());
         IRepository<long> chatRepository = new SecureRepository<long>(msSqlRepository);
 
-        return new TelegramBot("Token", chatRepository);;
+        return new TelegramBot(secureData.TelegramBotToken, chatRepository);;
     }
 
     public static WebApplication CreateWebApplication(INotification notification, MsSqlDatabaseBridge bridge)

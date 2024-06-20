@@ -1,4 +1,5 @@
 using GraviddleServer.Code.Repository;
+using Telegram.Bot.Types;
 
 namespace GraviddleServer.Code.TelegramBotNM.Commands.MessageCommands.ChatRepositoryCommands;
 
@@ -11,9 +12,9 @@ public class AddChatCommand : IMessageCommand
         _chatsRepository = chatsRepository;
     }
 
-    public Task Handle(long chatId, CancellationToken token)
+    public Task Handle(Message message, CancellationToken token)
     {
-        _chatsRepository.Add(chatId);
+        _chatsRepository.Add(message.Chat.Id);
         return Task.CompletedTask;
     }
 }

@@ -4,6 +4,7 @@ using GraviddleServer.Code.TelegramBotNM.Commands.MessageCommands;
 using GraviddleServer.Code.TelegramBotNM.Commands.MessageCommands.ChatRepositoryCommands;
 using GraviddleServer.Code.TelegramBotNM.Router;
 using Telegram.Bot;
+using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 
 namespace GraviddleServer.Code.TelegramBotNM;
@@ -20,7 +21,7 @@ public class TelegramBot
         Bridge = new TelegramBotBridge(_client, chatsRepository);
         _router = new TelegramBotRouter(new IRouterBranch[]
         {
-            new MessageCommandsRouterBranch(new Dictionary<string, IBotCommand<long>>()
+            new MessageCommandsRouterBranch(new Dictionary<string, IBotCommand<Message>>()
             {
                 { MessageCommands.Start, new AddChatCommand(chatsRepository) },
                 { MessageCommands.Stop, new RemoveChatCommand(chatsRepository) },
