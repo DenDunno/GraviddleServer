@@ -1,7 +1,8 @@
 using GraviddleServer.Code;
 using GraviddleServer.Code.API;
-using GraviddleServer.Code.Repository;
-using GraviddleServer.Code.TelegramBotNM;
+using GraviddleServer.Code.MsSqlRepositoryNM;
+using TelegramBotNM.Bot;
+using TelegramBotNM.Notification;
 
 SecureData secureData = CompositionRoot.FetchSecureData();
 MsSqlDatabaseBridge bridge = new(secureData.DatabaseConnectionString);

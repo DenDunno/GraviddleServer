@@ -1,19 +1,20 @@
-using System.Data.SqlClient;
+using System.Data;
+using TelegramBotNM.Parser;
 
 namespace GraviddleServer.Code.Parser;
 
-public class LevelRecordParser : ISqlRecordParser<LevelRecord>
+public class LevelRecordParser : IRecordParser<LevelRecord>
 {
-    public LevelRecord Parse(SqlDataReader sqlDataReader)
+    public LevelRecord Parse(IDataReader dataReader)
     {
         return new LevelRecord()
         {
-            DeviceId = (string)sqlDataReader[0],
-            Name = (string)sqlDataReader[1],
-            Stars = (int)sqlDataReader[2],
-            Level = (string)sqlDataReader[3],
-            Time = (double)sqlDataReader[4],
-            DeathCount = (int)sqlDataReader[5],
+            DeviceId = (string)dataReader[0],
+            Name = (string)dataReader[1],
+            Stars = (int)dataReader[2],
+            Level = (string)dataReader[3],
+            Time = (double)dataReader[4],
+            DeathCount = (int)dataReader[5],
         };
     }
 }

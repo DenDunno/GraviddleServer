@@ -3,7 +3,7 @@ using GraviddleServer.Code.Parser;
 
 namespace GraviddleServer.Code.Queries;
 
-public class AnalyticsQueries : IQueries<LevelRecord>
+public class AnalyticsQueries 
 {
     public string Insert(LevelRecord element)
     {
@@ -17,17 +17,6 @@ public class AnalyticsQueries : IQueries<LevelRecord>
                                                                                           '{escapedLevel}', 
                                                                                           {element.Time.ToString(CultureInfo.InvariantCulture)}, 
                                                                                           {element.DeathCount});";
-    }
-
-
-    public string Remove(LevelRecord element)
-    {
-        throw new NotImplementedException();
-    }
-
-    public string Contains(LevelRecord element)
-    {
-        throw new NotImplementedException();
     }
 
     public string GetAll()

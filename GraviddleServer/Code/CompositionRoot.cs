@@ -1,8 +1,11 @@
 using GraviddleServer.Code.API;
+using GraviddleServer.Code.Bot;
+using GraviddleServer.Code.MsSqlRepositoryNM;
 using GraviddleServer.Code.Parser;
 using GraviddleServer.Code.Queries;
-using GraviddleServer.Code.Repository;
-using GraviddleServer.Code.TelegramBotNM;
+using TelegramBotNM.Bot;
+using TelegramBotNM.Factory;
+using TelegramBotNM.Notification;
 
 namespace GraviddleServer.Code;
 
@@ -18,10 +21,10 @@ public abstract class CompositionRoot
     
     public static TelegramBot CreateTelegramBot(MsSqlDatabaseBridge bridge, SecureData secureData)
     {
-        MsSqlRepository<long> msSqlRepository = new(bridge, new ChatQueries(), new ChatIdParser());
-        IRepository<long> chatRepository = new SecureRepository<long>(msSqlRepository);
+        ITelegramBotFactory telegramBotFactory = 
+            new GraviddleAnalyticsBotFactory(bridge, secureData.TelegramBotToken);
 
-        return new TelegramBot(secureData.TelegramBotToken, chatRepository);;
+        return telegramBotFactory.Create();
     }
 
     public static WebApplication CreateWebApplication(INotification notification, MsSqlDatabaseBridge bridge)
