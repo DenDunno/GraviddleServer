@@ -15,22 +15,11 @@ public class RecordFetchCommand<TRecord, TKey> : RecordBaseCommand<TKey>, IRecor
         _parser = parser;
     }
 
-    public TRecord Execute(TKey key)
+    public bool TryExecute(TKey key, out TRecord record)
     {
         IDataReader reader = Bridge.ExecuteReader(GetQuery(key));
-        
-        if (reader.Read() == false)
-        {
-            throw new InvalidOperationException("No records were returned.");
-        }
+        record = reader.Read() ? _parser.Parse(reader) : default!;
 
-        TRecord result = _parser.Parse(reader);
-
-        if (reader.Read())
-        {
-            throw new InvalidOperationException("Multiple records were returned.");
-        }
-
-        return result;
+        return record != null;
     }
 }

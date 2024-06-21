@@ -25,7 +25,11 @@ public class StateMachine : IBotCommand<Message>
 
     public async Task Handle(Message input, CancellationToken token)
     {
-        TelegramUser user = _userFetch.Execute(input.Chat.Id);
+        if (_userFetch.TryExecute(input.Chat.Id, out TelegramUser? user) == false)
+        {
+            user = new TelegramUser(input.Chat.Id, Role.User, 0);
+        }
+        
         int conversationId = await UpdateConversation(input, token, user);
         _userUpdate.Execute(user with { ConversationState = conversationId });
     }
@@ -34,10 +38,13 @@ public class StateMachine : IBotCommand<Message>
     {
         int lastConversationId = user.ConversationState;
         bool isNotDeadEnd = true;
-
+        
+        Console.WriteLine($"Start with {_stateIdCalculator.IdToState(lastConversationId).GetType().Name}");
+        
         while (isNotDeadEnd)
         {
             int newConversationId = await TryTransit(input, token, lastConversationId);
+            Console.WriteLine($"New state {_stateIdCalculator.IdToState(newConversationId).GetType().Name}");
             isNotDeadEnd = lastConversationId != newConversationId;
             lastConversationId = newConversationId;
         }

@@ -1,6 +1,6 @@
 namespace TelegramBotNM.Repository.Commands.Contract;
 
-public interface IRecordsDump<out T>
+public interface IRecordsDump<T>
 {
-    IEnumerable<T> Execute();
+    IList<T> Execute();
 }

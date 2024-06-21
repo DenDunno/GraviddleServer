@@ -2,10 +2,10 @@ using GraviddleServer.Code.API;
 using GraviddleServer.Code.Bot;
 using GraviddleServer.Code.MsSqlRepositoryNM;
 using GraviddleServer.Code.Parser;
-using GraviddleServer.Code.Queries;
 using TelegramBotNM.Bot;
 using TelegramBotNM.Factory;
 using TelegramBotNM.Notification;
+using TelegramBotNM.Repository;
 
 namespace GraviddleServer.Code;
 
@@ -19,7 +19,7 @@ public abstract class CompositionRoot
             adminPassword: "");
     }
     
-    public static TelegramBot CreateTelegramBot(MsSqlDatabaseBridge bridge, SecureData secureData)
+    public static TelegramBot CreateTelegramBot(IDatabaseBridge bridge, SecureData secureData)
     {
         ITelegramBotFactory telegramBotFactory = 
             new GraviddleAnalyticsBotFactory(bridge, secureData.TelegramBotToken);
@@ -27,11 +27,11 @@ public abstract class CompositionRoot
         return telegramBotFactory.Create();
     }
 
-    public static WebApplication CreateWebApplication(INotification notification, MsSqlDatabaseBridge bridge)
+    public static WebApplication CreateWebApplication(INotification notification, IDatabaseBridge bridge)
     {
         WebApplication app = WebApplication.Create();
-        IRepository<LevelRecord> repository = new MsSqlRepository<LevelRecord>(bridge, new AnalyticsQueries(), new LevelRecordParser());
-        Endpoints endpoints = new(notification, repository);
+        Repository<LevelRecord, string> repository = new AnalyticsRepositoryFactory(bridge).Create();
+        Endpoints endpoints = new(notification, repository.Add, repository.Dump);
         
         app.MapGet("/", endpoints.Greet);
         app.MapGet("/post/{levelRecordJson}", endpoints.PostLevelResult);

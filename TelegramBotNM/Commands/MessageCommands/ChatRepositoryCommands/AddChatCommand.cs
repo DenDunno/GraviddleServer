@@ -1,5 +1,4 @@
 using Telegram.Bot.Types;
-using TelegramBotNM.Repository;
 using TelegramBotNM.Repository.Commands.Contract;
 
 namespace TelegramBotNM.Commands.MessageCommands.ChatRepositoryCommands;

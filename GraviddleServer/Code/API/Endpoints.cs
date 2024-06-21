@@ -2,20 +2,22 @@ using GraviddleServer.Code.Parser;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using TelegramBotNM.Notification;
-using TelegramBotNM.Repository;
+using TelegramBotNM.Repository.Commands.Contract;
 
 namespace GraviddleServer.Code.API;
 
 [ApiController]
 public class Endpoints : ControllerBase
 {
-    private readonly IRepository<LevelRecord> _levelRecords;
+    private readonly IRecordsDump<LevelRecord> _recordsDump;
+    private readonly IRecordAdd<LevelRecord> _recordAdd;
     private readonly INotification _notification;
 
-    public Endpoints(INotification notification, IRepository<LevelRecord> levelRecords)
+    public Endpoints(INotification notification, IRecordAdd<LevelRecord> recordAdd, IRecordsDump<LevelRecord> recordsDump)
     {
         _notification = notification;
-        _levelRecords = levelRecords;
+        _recordsDump = recordsDump;
+        _recordAdd = recordAdd;
     }
 
     public string Greet()
@@ -29,13 +31,16 @@ public class Endpoints : ControllerBase
         string levelResultRecord = levelRecord.ToString();
 
         _notification.Notify(levelResultRecord);
-        _levelRecords.Add(levelRecord);
+        _recordAdd.Execute(levelRecord);
 
         return levelResultRecord;
     }
 
     public string GetAllRecords()
     {
-        return _levelRecords.GetAll().Select(x => x.ToString()).Aggregate((s, s1) => s + '\n' + s1);
+        IList<LevelRecord> dump = _recordsDump.Execute();
+
+        return dump.Any() ? dump.Select(x => x.ToString()).Aggregate((s, s1) => s + '\n' + s1) : 
+            "No records"; 
     }
 }

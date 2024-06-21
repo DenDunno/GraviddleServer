@@ -1,6 +1,6 @@
 namespace TelegramBotNM.Repository.Commands.Contract;
 
-public interface IRecordRemove<in T> 
+public interface IRecordRemove<in TKey> 
 {
-    void Execute(T element);
+    void Execute(TKey key);
 }

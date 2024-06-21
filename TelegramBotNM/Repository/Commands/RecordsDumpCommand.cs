@@ -18,7 +18,7 @@ public class RecordsDumpCommand<TRecord> : IRecordsDump<TRecord>
         _parser = parser;
     }
 
-    public IEnumerable<TRecord> Execute()
+    public IList<TRecord> Execute()
     {
         List<TRecord> elements = new();
         using IDataReader reader = _bridge.ExecuteReader(_queryProvider.Value);

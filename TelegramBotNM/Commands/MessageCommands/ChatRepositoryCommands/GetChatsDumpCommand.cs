@@ -2,7 +2,6 @@ using System.Text;
 using Telegram.Bot.Types;
 using TelegramBotNM.Bot;
 using TelegramBotNM.Extensions;
-using TelegramBotNM.Repository;
 using TelegramBotNM.Repository.Commands.Contract;
 
 namespace TelegramBotNM.Commands.MessageCommands.ChatRepositoryCommands;

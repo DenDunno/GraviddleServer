@@ -1,6 +1,6 @@
 namespace TelegramBotNM.Repository.Commands.Contract;
 
-public interface IRecordFetch<out TRecord, in TKey>
+public interface IRecordFetch<TRecord, in TKey>
 {
-    TRecord Execute(TKey key);
+    bool TryExecute(TKey key, out TRecord record);
 }

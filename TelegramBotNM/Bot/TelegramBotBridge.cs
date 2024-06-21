@@ -1,6 +1,5 @@
 using Telegram.Bot;
 using Telegram.Bot.Types;
-using TelegramBotNM.Repository;
 using TelegramBotNM.Repository.Commands.Contract;
 using TelegramBotNM.UserNM;
 

@@ -1,8 +1,5 @@
 using GraviddleServer.Code.MsSqlRepositoryNM;
-using GraviddleServer.Code.Parser;
-using GraviddleServer.Code.Queries;
 using Telegram.Bot;
-using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using TelegramBotNM.Bot;
 using TelegramBotNM.Commands;
@@ -13,51 +10,54 @@ using TelegramBotNM.Router;
 using TelegramBotNM.StateMachineNM;
 using TelegramBotNM.StateMachineNM.TransitionNM;
 using TelegramBotNM.StateMachineNM.TransitionNM.Condition;
+using TelegramBotNM.UserNM;
 
 namespace GraviddleServer.Code.Bot;
 
 public class GraviddleAnalyticsBotFactory : ITelegramBotFactory
 {
-    private readonly MsSqlDatabaseBridge _databaseBridge;
+    private readonly IDatabaseBridge _databaseBridge;
     private readonly string _token;
 
-    public GraviddleAnalyticsBotFactory(MsSqlDatabaseBridge databaseBridge, string token)
+    public GraviddleAnalyticsBotFactory(IDatabaseBridge databaseBridge, string token)
     {
         _databaseBridge = databaseBridge;
         _token = token;
     }
 
     public TelegramBot Create()
-    {
-        MsSqlRepositoryFactory repositoryFactory = new(_databaseBridge);
-        UserRepository userRepository = repositoryFactory.CreateUserRepository();
-        
+    {        
+        Repository<TelegramUser, long> repository = new UserRepositoryFactory(_databaseBridge).Create();
         TelegramBotClient client = new(_token);
-        TelegramBotBridge botBridge = new(client, userRepository.Dump);
-        BotStates states = new();
-        IReadOnlyDictionary<Type, List<Transition>> transitions = GetTransitions(states);
-        StateIdCalculator stateIdCalculator = new(states.All);
-        StateMachine botStateMachine = new(transitions, stateIdCalculator, userRepository.Update, userRepository.Fetch);
-        
+        TelegramBotBridge botBridge = new(client, repository.Dump);
+
         return new TelegramBot(client, botBridge, new IRouterBranch[]
         {
-            new MessageCommandsRouterBranch(botStateMachine),
-
+            new MessageCommandsRouterBranch(BuildStateMachine(repository)),
             new MemberStatusRouterBranch(new Dictionary<ChatMemberStatus, IBotCommand<long>>()
             {
-                { ChatMemberStatus.Kicked, new RemoveChatCommand(chatRepository) }
+                { ChatMemberStatus.Kicked, new RemoveChatCommand(repository.Remove) }
             })
         });
+    }
+
+    private StateMachine BuildStateMachine(Repository<TelegramUser, long> userRepository)
+    {
+        BotStates states = new(userRepository.Add);
+        IReadOnlyDictionary<Type, List<Transition>> transitions = GetTransitions(states);
+        StateIdCalculator stateIdCalculator = new(states.All);
+        stateIdCalculator.Initialize();
+        
+        StateMachine botStateMachine = new(transitions, stateIdCalculator, userRepository.Update, userRepository.Fetch);
+        return botStateMachine;
     }
 
     private IReadOnlyDictionary<Type, List<Transition>> GetTransitions(BotStates states)
     {
         TransitionsBuilder builder = new();
-        
+
         builder.Add(new Transition(states.Root, states.Start, new StringComparisonCondition("/start")));
-        builder.Add(new Transition(states.Root, states.Start, new StringComparisonCondition("/start")));
-        builder.Add(new Transition(states.Root, states.Start, new StringComparisonCondition("/start")));
-        
+
         return builder.Build();
     }
 }

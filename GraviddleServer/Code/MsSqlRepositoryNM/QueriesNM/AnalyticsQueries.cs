@@ -3,9 +3,9 @@ using GraviddleServer.Code.Parser;
 
 namespace GraviddleServer.Code.Queries;
 
-public class AnalyticsQueries 
+public class AnalyticsQueries : Queries<LevelRecord, string>
 {
-    public string Insert(LevelRecord element)
+    public override string Insert(LevelRecord element)
     {
         string escapedName = element.Name.Replace("'", "''");
         string escapedLevel = element.Level.Replace("'", "''");
@@ -19,7 +19,7 @@ public class AnalyticsQueries
                                                                                           {element.DeathCount});";
     }
 
-    public string GetAll()
+    public override string GetAll()
     {
         return $@"SELECT * FROM Analytics;";
     }
