@@ -2,7 +2,7 @@ namespace TelegramBotNM.StateMachineNM;
 
 public class StateIdCalculator
 {
-    private readonly Dictionary<Type, int> _ids = new();
+    private readonly Dictionary<IState, int> _ids = new();
     private readonly IList<IState> _states;
 
     public StateIdCalculator(IList<IState> states)
@@ -14,18 +14,13 @@ public class StateIdCalculator
     {
         foreach (IState state in _states)
         {
-            _ids[state.GetType()] = _ids.Count;
+            _ids[state] = _ids.Count;
         }
-    }
-
-    public int StateToId<T>() where T : IState
-    {
-        return _ids[typeof(T)];
     }
     
     public int StateToId(IState state)
     {
-        return _ids[state.GetType()];
+        return _ids[state];
     }
 
     public IState IdToState(int id)

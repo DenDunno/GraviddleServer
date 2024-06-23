@@ -4,14 +4,14 @@ namespace TelegramBotNM.StateMachineNM;
 
 public class StateMachine 
 {
-    private readonly IReadOnlyDictionary<Type, List<Transition>> _transitions;
+    private readonly TransitionsPresenter _transitionsPresenter;
     private readonly StateIdCalculator _stateIdCalculator;
     private IState _state;
 
-    public StateMachine(IReadOnlyDictionary<Type, List<Transition>> transitions, IState state, StateIdCalculator stateIdCalculator)
+    public StateMachine(TransitionsPresenter transitionsPresenter, IState state, StateIdCalculator stateIdCalculator)
     {
+        _transitionsPresenter = transitionsPresenter;
         _stateIdCalculator = stateIdCalculator;
-        _transitions = transitions;
         _state = state;
     }
 
@@ -23,6 +23,7 @@ public class StateMachine
         while (isNotDeadEnd)
         {
             isNotDeadEnd = await TryTransit(token);
+            isNotDeadEnd = isNotDeadEnd && _state.IsUnblocking;
         }
 
         return new ConversationResult(initialState != _state, _stateIdCalculator.StateToId(_state));
@@ -30,17 +31,16 @@ public class StateMachine
 
     private async Task<bool> TryTransit(CancellationToken token)
     {
-        foreach (Transition transition in _transitions[_state.GetType()])
+        IState newState = _transitionsPresenter.Transit(_state);
+        bool successfulTransition = newState != _state;
+        
+        if (successfulTransition)
         {
-            if (transition.Condition.IsTrue())
-            {
-                _state.Exit();
-                _state = transition.StateTo;
-                await _state.Enter(token);
-                return true;
-            }
+            _state.Exit();
+            _state = newState;
+            await _state.Enter(token);
         }
 
-        return false;
+        return successfulTransition;
     }
 }

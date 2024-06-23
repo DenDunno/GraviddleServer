@@ -24,7 +24,7 @@ public class TelegramBotBridge
     public async Task SendToAll(string text)
     {
         IEnumerable<TelegramUser> users = _userRecordsDump.Execute();
-        IEnumerable<Task<Message>> tasks = users.Select(user => _client.SendTextMessageAsync(user.ChatId, text));
+        IEnumerable<Task<Message>> tasks = users.Select(user => _client.SendTextMessageAsync(user.Id, text));
 
         await Task.WhenAll(tasks);
     }

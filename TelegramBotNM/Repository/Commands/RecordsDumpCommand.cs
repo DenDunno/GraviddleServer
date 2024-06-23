@@ -28,6 +28,8 @@ public class RecordsDumpCommand<TRecord> : IRecordsDump<TRecord>
             elements.Add(_parser.Parse(reader));
         }
 
+        reader.Close();
+        
         return elements;
     }
 }

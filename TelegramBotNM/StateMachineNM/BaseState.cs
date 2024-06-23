@@ -3,6 +3,8 @@ namespace TelegramBotNM.StateMachineNM;
 
 public abstract class BaseState : IState
 {
+    public virtual bool IsUnblocking => true;
+
     public async Task Enter(CancellationToken token)
     {
         await OnEnter(token);

@@ -9,16 +9,18 @@ namespace GraviddleServer.Code.MsSqlRepositoryNM;
 public class AnalyticsRepositoryFactory : RepositoryFactory<LevelRecord, string>
 {
     public AnalyticsRepositoryFactory(IDatabaseBridge bridge) :
-        base(new AnalyticsQueries(), bridge, new LevelRecordParser())
+        base(bridge, new LevelRecordParser())
     {
     }
     
     public override Repository<LevelRecord, string> Create()
     {
+        AnalyticsQueries queries = new();
+        
         return new Repository<LevelRecord, string>()
         {
-            Add = new RecordCommand<LevelRecord>(Bridge, new QueryBuilder<LevelRecord>(Queries.Insert)),
-            Dump = new RecordsDumpCommand<LevelRecord>(Bridge, Parser, new QueryProvider(Queries.GetAll()))
+            Add = new RecordCommand<LevelRecord, string>(Bridge, new QueryBuilder<LevelRecord>(queries.Insert)),
+            Dump = new RecordsDumpCommand<LevelRecord>(Bridge, Parser, new QueryProvider(queries.GetAll()))
         };
     }
 }

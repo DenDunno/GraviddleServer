@@ -10,10 +10,10 @@ namespace GraviddleServer.Code.API;
 public class Endpoints : ControllerBase
 {
     private readonly IRecordsDump<LevelRecord> _recordsDump;
-    private readonly IRecordAdd<LevelRecord> _recordAdd;
+    private readonly IRecordAdd<LevelRecord, string> _recordAdd;
     private readonly INotification _notification;
 
-    public Endpoints(INotification notification, IRecordAdd<LevelRecord> recordAdd, IRecordsDump<LevelRecord> recordsDump)
+    public Endpoints(INotification notification, IRecordAdd<LevelRecord, string> recordAdd, IRecordsDump<LevelRecord> recordsDump)
     {
         _notification = notification;
         _recordsDump = recordsDump;

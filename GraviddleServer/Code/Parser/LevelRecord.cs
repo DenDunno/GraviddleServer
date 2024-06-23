@@ -1,9 +1,11 @@
+using TelegramBotNM.Repository;
+
 namespace GraviddleServer.Code.Parser;
 
 [Serializable]
-public class LevelRecord
+public class LevelRecord : IDatabaseModel<string>
 {
-    public string DeviceId { get; set; } = null!;
+    public string Id { get; set; } = null!;
     public string Name { get; set; } = null!;
     public int Stars { get; set; }
     public string Level { get; set; } = null!;

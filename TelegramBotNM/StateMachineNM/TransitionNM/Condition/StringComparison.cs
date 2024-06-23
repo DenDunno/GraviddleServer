@@ -1,11 +1,11 @@
 namespace TelegramBotNM.StateMachineNM.TransitionNM.Condition;
 
-public class StringComparisonCondition : ICondition 
+public class StringComparison : ICondition 
 {
     private readonly string _targetString;
     private readonly string _input;
 
-    public StringComparisonCondition(string input, string targetString)
+    public StringComparison(string input, string targetString)
     {
         _targetString = targetString;
         _input = input;

@@ -9,7 +9,7 @@ public class LevelRecordParser : IRecordParser<LevelRecord>
     {
         return new LevelRecord()
         {
-            DeviceId = (string)dataReader[0],
+            Id = (string)dataReader[0],
             Name = (string)dataReader[1],
             Stars = (int)dataReader[2],
             Level = (string)dataReader[3],

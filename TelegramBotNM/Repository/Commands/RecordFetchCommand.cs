@@ -5,7 +5,7 @@ using TelegramBotNM.Repository.Query;
 
 namespace TelegramBotNM.Repository.Commands;
 
-public class RecordFetchCommand<TRecord, TKey> : RecordBaseCommand<TKey>, IRecordFetch<TRecord, TKey>
+public class RecordFetchCommand<TRecord, TKey> : RecordBaseCommand<TKey>, IRecordFetch<TRecord, TKey> 
 {
     private readonly IRecordParser<TRecord> _parser;
     
@@ -19,7 +19,8 @@ public class RecordFetchCommand<TRecord, TKey> : RecordBaseCommand<TKey>, IRecor
     {
         IDataReader reader = Bridge.ExecuteReader(GetQuery(key));
         record = reader.Read() ? _parser.Parse(reader) : default!;
-
+        reader.Close();
+        
         return record != null;
     }
 }
