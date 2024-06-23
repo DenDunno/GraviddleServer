@@ -1,4 +1,4 @@
-using TelegramBotNM.Repository.Commands.Contract;
+using TelegramBotNM.Repository;
 using TelegramBotNM.StateMachineNM;
 using TelegramBotNM.UserNM;
 
@@ -6,13 +6,13 @@ namespace GraviddleServer.Code.Bot;
 
 public class BotStates
 {
-    public readonly EmptyState Root = new();
+    public readonly RootState Root = new();
     public readonly StartState Start;
     public readonly StopState StopState = new();
 
-    public BotStates(IRecordAdd<TelegramUser> recordAdd)
+    public BotStates(TelegramUser user, Repository<TelegramUser, long> repository)
     {
-        Start = new StartState(recordAdd);
+        Start = new StartState(repository.Add, user);
     }
 
     public IList<IState> All => new List<IState>()

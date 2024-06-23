@@ -3,13 +3,12 @@ using GraviddleServer.Code.Bot;
 using GraviddleServer.Code.MsSqlRepositoryNM;
 using GraviddleServer.Code.Parser;
 using TelegramBotNM.Bot;
-using TelegramBotNM.Factory;
 using TelegramBotNM.Notification;
 using TelegramBotNM.Repository;
 
 namespace GraviddleServer.Code;
 
-public abstract class CompositionRoot
+public static class CompositionRoot
 {
     public static SecureData FetchSecureData()
     {
@@ -21,9 +20,7 @@ public abstract class CompositionRoot
     
     public static TelegramBot CreateTelegramBot(IDatabaseBridge bridge, SecureData secureData)
     {
-        ITelegramBotFactory telegramBotFactory = 
-            new GraviddleAnalyticsBotFactory(bridge, secureData.TelegramBotToken);
-
+        ITelegramBotFactory telegramBotFactory = new TelegramBotFactory(bridge, secureData.TelegramBotToken);
         return telegramBotFactory.Create();
     }
 

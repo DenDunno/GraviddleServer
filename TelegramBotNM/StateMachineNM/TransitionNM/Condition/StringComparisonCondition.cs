@@ -1,18 +1,18 @@
-using Telegram.Bot.Types;
-
 namespace TelegramBotNM.StateMachineNM.TransitionNM.Condition;
 
 public class StringComparisonCondition : ICondition 
 {
     private readonly string _targetString;
+    private readonly string _input;
 
-    public StringComparisonCondition(string targetString)
+    public StringComparisonCondition(string input, string targetString)
     {
         _targetString = targetString;
+        _input = input;
     }
 
-    public bool IsTrue(Message message)
+    public bool IsTrue()
     {
-        return message.Text == _targetString;
+        return _input == _targetString;
     }
 }

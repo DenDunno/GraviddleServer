@@ -1,4 +1,4 @@
-using GraviddleServer.Code.Queries;
+using GraviddleServer.Code.MsSqlRepositoryNM.QueriesNM;
 using TelegramBotNM.Parser;
 using TelegramBotNM.Repository;
 using TelegramBotNM.Repository.Commands;

@@ -1,9 +1,8 @@
-using GraviddleServer.Code.Queries;
 using TelegramBotNM.Factory;
 using TelegramBotNM.Parser;
-using TelegramBotNM.Repository;
+using TelegramBotNM.Repository.Query;
 
-namespace GraviddleServer.Code.MsSqlRepositoryNM;
+namespace TelegramBotNM.Repository;
 
 public abstract class RepositoryFactory<TRecord, TKey> : IFactory<Repository<TRecord, TKey>>
 {

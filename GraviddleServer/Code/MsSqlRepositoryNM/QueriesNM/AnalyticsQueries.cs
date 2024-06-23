@@ -1,7 +1,8 @@
 using System.Globalization;
 using GraviddleServer.Code.Parser;
+using TelegramBotNM.Repository.Query;
 
-namespace GraviddleServer.Code.Queries;
+namespace GraviddleServer.Code.MsSqlRepositoryNM.QueriesNM;
 
 public class AnalyticsQueries : Queries<LevelRecord, string>
 {

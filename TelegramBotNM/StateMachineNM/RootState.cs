@@ -1,5 +1,5 @@
 namespace TelegramBotNM.StateMachineNM;
 
-public class EmptyState : BaseState
+public class RootState : BaseState
 {
 }

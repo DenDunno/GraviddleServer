@@ -18,6 +18,11 @@ public class StateIdCalculator
         }
     }
 
+    public int StateToId<T>() where T : IState
+    {
+        return _ids[typeof(T)];
+    }
+    
     public int StateToId(IState state)
     {
         return _ids[state.GetType()];

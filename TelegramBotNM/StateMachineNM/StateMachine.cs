@@ -1,71 +1,46 @@
-using Telegram.Bot.Types;
-using TelegramBotNM.Commands;
-using TelegramBotNM.Repository;
-using TelegramBotNM.Repository.Commands.Contract;
 using TelegramBotNM.StateMachineNM.TransitionNM;
-using TelegramBotNM.UserNM;
 
 namespace TelegramBotNM.StateMachineNM;
 
-public class StateMachine : IBotCommand<Message>
+public class StateMachine 
 {
     private readonly IReadOnlyDictionary<Type, List<Transition>> _transitions;
-    private readonly IRecordFetch<TelegramUser, long> _userFetch;
-    private readonly IRecordUpdate<TelegramUser> _userUpdate;
     private readonly StateIdCalculator _stateIdCalculator;
+    private IState _state;
 
-    public StateMachine(IReadOnlyDictionary<Type, List<Transition>> transitions, StateIdCalculator stateIdCalculator,
-        IRecordUpdate<TelegramUser> userUpdate, IRecordFetch<TelegramUser, long> userFetch)
+    public StateMachine(IReadOnlyDictionary<Type, List<Transition>> transitions, IState state, StateIdCalculator stateIdCalculator)
     {
         _stateIdCalculator = stateIdCalculator;
         _transitions = transitions;
-        _userUpdate = userUpdate;
-        _userFetch = userFetch;
+        _state = state;
     }
 
-    public async Task Handle(Message input, CancellationToken token)
+    public async Task<ConversationResult> UpdateConversation(CancellationToken token)
     {
-        if (_userFetch.TryExecute(input.Chat.Id, out TelegramUser? user) == false)
-        {
-            user = new TelegramUser(input.Chat.Id, Role.User, 0);
-        }
-        
-        int conversationId = await UpdateConversation(input, token, user);
-        _userUpdate.Execute(user with { ConversationState = conversationId });
-    }
-
-    private async Task<int> UpdateConversation(Message input, CancellationToken token, TelegramUser user)
-    {
-        int lastConversationId = user.ConversationState;
         bool isNotDeadEnd = true;
-        
-        Console.WriteLine($"Start with {_stateIdCalculator.IdToState(lastConversationId).GetType().Name}");
+        IState initialState = _state;
         
         while (isNotDeadEnd)
         {
-            int newConversationId = await TryTransit(input, token, lastConversationId);
-            Console.WriteLine($"New state {_stateIdCalculator.IdToState(newConversationId).GetType().Name}");
-            isNotDeadEnd = lastConversationId != newConversationId;
-            lastConversationId = newConversationId;
+            isNotDeadEnd = await TryTransit(token);
         }
 
-        return lastConversationId;
+        return new ConversationResult(initialState != _state, _stateIdCalculator.StateToId(_state));
     }
 
-    private async Task<int> TryTransit(Message message, CancellationToken token, int conversationStateId)
+    private async Task<bool> TryTransit(CancellationToken token)
     {
-        IState state = _stateIdCalculator.IdToState(conversationStateId);
-
-        foreach (Transition transition in _transitions[state.GetType()])
+        foreach (Transition transition in _transitions[_state.GetType()])
         {
-            if (transition.Condition.IsTrue(message))
+            if (transition.Condition.IsTrue())
             {
-                state.Exit();
-                state = transition.StateTo;
-                await state.Enter(message, token);
+                _state.Exit();
+                _state = transition.StateTo;
+                await _state.Enter(token);
+                return true;
             }
         }
 
-        return _stateIdCalculator.StateToId(state);
+        return false;
     }
 }

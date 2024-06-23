@@ -1,4 +1,4 @@
-namespace GraviddleServer.Code.Queries;
+namespace TelegramBotNM.Repository.Query;
 
 public abstract class Queries<TRecord, TKey>
 {

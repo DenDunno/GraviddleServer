@@ -1,12 +1,11 @@
-using Telegram.Bot.Types;
 
 namespace TelegramBotNM.StateMachineNM;
 
 public abstract class BaseState : IState
 {
-    public async Task Enter(Message message, CancellationToken token)
+    public async Task Enter(CancellationToken token)
     {
-        await OnEnter(message, token);
+        await OnEnter(token);
     }
 
     public void Exit()
@@ -14,7 +13,7 @@ public abstract class BaseState : IState
         OnExit();
     }
 
-    protected virtual async Task OnEnter(Message message, CancellationToken token)
+    protected virtual async Task OnEnter(CancellationToken token)
     {
         await Task.Yield();
     }
