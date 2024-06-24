@@ -1,4 +1,3 @@
-using TelegramBotNM.Repository.Query;
 using TelegramBotNM.UserNM;
 
 namespace GraviddleServer.Code.MsSqlRepositoryNM.QueriesNM;

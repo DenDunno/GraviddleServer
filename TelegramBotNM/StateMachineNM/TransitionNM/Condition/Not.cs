@@ -1,10 +1,10 @@
 namespace TelegramBotNM.StateMachineNM.TransitionNM.Condition;
 
-public class InvertCondition : ICondition
+public class Not : ICondition
 {
     private readonly ICondition _condition;
 
-    public InvertCondition(ICondition condition)
+    public Not(ICondition condition)
     {
         _condition = condition;
     }

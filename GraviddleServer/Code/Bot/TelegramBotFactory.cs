@@ -8,7 +8,6 @@ using TelegramBotNM.Repository;
 using TelegramBotNM.Router;
 using TelegramBotNM.StateMachineNM;
 using TelegramBotNM.StateMachineNM.UserProvider;
-using TelegramBotNM.UserNM;
 
 namespace GraviddleServer.Code.Bot;
 
@@ -25,18 +24,18 @@ public class TelegramBotFactory : ITelegramBotFactory
 
     public TelegramBot Create()
     {        
-        Repository<TelegramUser, long> repository = new UserRepositoryFactory(_databaseBridge).Create();
+        UserRepository userRepository = new UserRepositoryFactory(_databaseBridge).Create();
         ITelegramBotClient client = new TelegramBotClient(_token);
-        TelegramBotBridge botBridge = new(client, repository.Dump);
-        IStateMachineFactory stateMachineFactory = new BotStateMachineFactory(repository, botBridge);
-        IUserProvider userProvider = new UserProvider(repository.Fetch);
+        TelegramBotBridge botBridge = new(client, userRepository.Dump);
+        IStateMachineFactory stateMachineFactory = new BotStateMachineFactory(userRepository, botBridge);
+        IUserProvider userProvider = new UserProvider(userRepository.Fetch);
         
         return new TelegramBot(client, botBridge, new IRouterBranch[]
         {
-            new Conversation(repository, stateMachineFactory, userProvider),
+            new Conversation(userRepository, stateMachineFactory, userProvider),
             new MemberStatusChangedBranch(new Dictionary<ChatMemberStatus, IBotCommand<long>>()
             {
-                { ChatMemberStatus.Kicked, new RemoveChatCommand(repository.Remove) }
+                { ChatMemberStatus.Kicked, new RemoveChatCommand(userRepository.Remove) }
             })
         });
     }

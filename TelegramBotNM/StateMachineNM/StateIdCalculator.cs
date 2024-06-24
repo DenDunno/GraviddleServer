@@ -3,9 +3,9 @@ namespace TelegramBotNM.StateMachineNM;
 public class StateIdCalculator
 {
     private readonly Dictionary<IState, int> _ids = new();
-    private readonly IList<IState> _states;
+    private readonly IReadOnlyList<IState> _states;
 
-    public StateIdCalculator(IList<IState> states)
+    public StateIdCalculator(IReadOnlyList<IState> states)
     {
         _states = states;
     }

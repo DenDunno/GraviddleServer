@@ -1,4 +1,5 @@
 using GraviddleServer.Code.MsSqlRepositoryNM.QueriesNM;
+using TelegramBotNM.Factory;
 using TelegramBotNM.Parser;
 using TelegramBotNM.Repository;
 using TelegramBotNM.Repository.Commands;
@@ -7,27 +8,32 @@ using TelegramBotNM.UserNM;
 
 namespace GraviddleServer.Code.MsSqlRepositoryNM;
 
-public class UserRepositoryFactory : RepositoryFactory<TelegramUser, long>
+public class UserRepositoryFactory : IFactory<UserRepository>
 {
-    public UserRepositoryFactory(IDatabaseBridge bridge) : base(bridge, new UserParser())
+    private readonly IDatabaseBridge _bridge;
+
+    public UserRepositoryFactory(IDatabaseBridge bridge)
     {
+        _bridge = bridge;
     }
 
-    public override Repository<TelegramUser, long> Create()
+    public UserRepository Create()
     {
         UserQueries queries = new();
-        RecordСontainsCommand<long> containsCommand = new(Bridge, new QueryBuilder<long>(queries.Contains));
-        RecordCommand<TelegramUser, long> addCommand = new(Bridge, new QueryBuilder<TelegramUser>(queries.Insert));
-        RecordRemoveCommand<long> removeCommand = new(Bridge, new QueryBuilder<long>(queries.Remove));
+        UserParser parser = new();
+        RecordСontainsCommand<long> containsCommand = new(_bridge, new QueryBuilder<long>(queries.Contains));
+        RecordCommand<TelegramUser, long> addCommand = new(_bridge, new QueryBuilder<TelegramUser>(queries.Insert));
+        RecordRemoveCommand<long> removeCommand = new(_bridge, new QueryBuilder<long>(queries.Remove));
         
-        return new Repository<TelegramUser, long>()
+        return new UserRepository
         {
             Add = new RecordSafeAdd<TelegramUser, long>(containsCommand, addCommand),
             Remove = new RecordSafeRemove<long>(containsCommand, removeCommand),
-            Update = new RecordCommand<TelegramUser, long>(Bridge, new QueryBuilder<TelegramUser>(queries.UpdateConversation)),
-            Contains = new RecordСontainsCommand<long>(Bridge, new QueryBuilder<long>(queries.Contains)),
-            Fetch = new RecordFetchCommand<TelegramUser, long>(Bridge, Parser, new QueryBuilder<long>(queries.Fetch)),
-            Dump = new RecordsDumpCommand<TelegramUser>(Bridge, Parser, new QueryProvider(queries.GetAll()))
+            UpdateConversation = new RecordCommand<TelegramUser, long>(_bridge, new QueryBuilder<TelegramUser>(queries.UpdateConversation)),
+            UpdateRole = new RecordCommand<TelegramUser, long>(_bridge, new QueryBuilder<TelegramUser>(queries.UpdateRole)),
+            Contains = new RecordСontainsCommand<long>(_bridge, new QueryBuilder<long>(queries.Contains)),
+            Fetch = new RecordFetchCommand<TelegramUser, long>(_bridge, parser, new QueryBuilder<long>(queries.Fetch)),
+            Dump = new RecordsDumpCommand<TelegramUser>(_bridge, parser, new QueryProvider(queries.GetAll()))
         };
     }
 }

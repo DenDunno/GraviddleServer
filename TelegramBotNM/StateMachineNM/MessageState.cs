@@ -8,7 +8,7 @@ public class MessageState : BaseState
     private readonly string _message;
     private readonly long _chatId;
 
-    public MessageState(TelegramBotBridge bridge, string message, long chatId)
+    public MessageState(TelegramBotBridge bridge, long chatId, string message)
     {
         _message = message;
         _chatId = chatId;

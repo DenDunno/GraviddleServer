@@ -1,6 +1,6 @@
 namespace TelegramBotNM.StateMachineNM.TransitionNM.Condition;
 
-public class ConditionAlways : ICondition
+public class True : ICondition
 {
     public bool IsTrue()
     {

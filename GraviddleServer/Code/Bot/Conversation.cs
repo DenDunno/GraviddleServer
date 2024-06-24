@@ -10,15 +10,15 @@ namespace GraviddleServer.Code.Bot;
 
 public class Conversation : RouterBranch<Message>
 {
-    private readonly Repository<TelegramUser, long> _repository;
     private readonly IStateMachineFactory _stateMachineFactory;
+    private readonly UserRepository _userRepository;
     private readonly IUserProvider _userProvider;
     
-    public Conversation(Repository<TelegramUser, long> repository, IStateMachineFactory stateMachineFactory, IUserProvider userProvider)
+    public Conversation(UserRepository userRepository, IStateMachineFactory stateMachineFactory, IUserProvider userProvider)
     {
         _stateMachineFactory = stateMachineFactory;
+        _userRepository = userRepository;
         _userProvider = userProvider;
-        _repository = repository;
     }
 
     protected override UpdateType UpdateType => UpdateType.Message;
@@ -30,9 +30,9 @@ public class Conversation : RouterBranch<Message>
         StateMachine stateMachine = _stateMachineFactory.Create(message.Text!, user);
         ConversationResult conversationResult = await stateMachine.UpdateConversation(cancellationToken);
 
-        if (conversationResult.Success)
+        if (conversationResult.NewState)
         {
-            _repository.Update.Execute(user with { ConversationState = conversationResult.NewStateId });
+            _userRepository.UpdateConversation.Execute(user with { ConversationState = conversationResult.NewStateId });
         }
     }
 }

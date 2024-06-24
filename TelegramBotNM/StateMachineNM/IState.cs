@@ -2,8 +2,8 @@
 namespace TelegramBotNM.StateMachineNM;
 
 public interface IState
-{
-    bool IsUnblocking { get; }
+{    
+    bool IsPassive { get; }
     Task Enter(CancellationToken token);
     void Exit();
 }

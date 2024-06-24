@@ -1,7 +1,6 @@
 using GraviddleServer.Code.API;
 using GraviddleServer.Code.Bot;
 using GraviddleServer.Code.MsSqlRepositoryNM;
-using GraviddleServer.Code.Parser;
 using TelegramBotNM.Bot;
 using TelegramBotNM.Notification;
 using TelegramBotNM.Repository;
@@ -27,8 +26,8 @@ public static class CompositionRoot
     public static WebApplication CreateWebApplication(INotification notification, IDatabaseBridge bridge)
     {
         WebApplication app = WebApplication.Create();
-        Repository<LevelRecord, string> repository = new AnalyticsRepositoryFactory(bridge).Create();
-        Endpoints endpoints = new(notification, repository.Add, repository.Dump);
+        AnalyticsRepository analyticsRepository = new AnalyticsRepositoryFactory(bridge).Create();
+        Endpoints endpoints = new(notification, analyticsRepository.Add, analyticsRepository.Dump);
         
         app.MapGet("/", endpoints.Greet);
         app.MapGet("/post/{levelRecordJson}", endpoints.PostLevelResult);

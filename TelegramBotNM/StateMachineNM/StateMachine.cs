@@ -2,7 +2,7 @@ using TelegramBotNM.StateMachineNM.TransitionNM;
 
 namespace TelegramBotNM.StateMachineNM;
 
-public class StateMachine 
+public class StateMachine
 {
     private readonly TransitionsPresenter _transitionsPresenter;
     private readonly StateIdCalculator _stateIdCalculator;
@@ -17,23 +17,22 @@ public class StateMachine
 
     public async Task<ConversationResult> UpdateConversation(CancellationToken token)
     {
-        bool isNotDeadEnd = true;
-        IState initialState = _state;
-        
-        while (isNotDeadEnd)
-        {
-            isNotDeadEnd = await TryTransit(token);
-            isNotDeadEnd = isNotDeadEnd && _state.IsUnblocking;
-        }
+        bool continueTraversing;
 
-        return new ConversationResult(initialState != _state, _stateIdCalculator.StateToId(_state));
+        do
+        {
+            continueTraversing = await TryTransit(token);
+            
+        } while (_state.IsPassive && continueTraversing);
+
+        return new ConversationResult(_state.IsPassive == false, _stateIdCalculator.StateToId(_state));
     }
 
     private async Task<bool> TryTransit(CancellationToken token)
     {
         IState newState = _transitionsPresenter.Transit(_state);
         bool successfulTransition = newState != _state;
-        
+
         if (successfulTransition)
         {
             _state.Exit();

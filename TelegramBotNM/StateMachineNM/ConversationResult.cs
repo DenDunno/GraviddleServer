@@ -3,11 +3,11 @@ namespace TelegramBotNM.StateMachineNM;
 public class ConversationResult
 {
     public readonly int NewStateId;
-    public readonly bool Success;
+    public readonly bool NewState;
 
-    public ConversationResult(bool success, int newStateId)
+    public ConversationResult(bool newState, int newStateId)
     {
         NewStateId = newStateId;
-        Success = success;
+        NewState = newState;
     }
 }

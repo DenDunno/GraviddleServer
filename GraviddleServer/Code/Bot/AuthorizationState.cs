@@ -5,9 +5,9 @@ namespace GraviddleServer.Code.Bot;
 
 public class AuthorizationState : MessageState
 {
-    public override bool IsUnblocking => false;
+    public override bool IsPassive => false;
 
-    public AuthorizationState(TelegramBotBridge bridge, long chatId) : base(bridge, "Enter password:", chatId)
+    public AuthorizationState(TelegramBotBridge bridge, long chatId) : base(bridge, chatId, "Enter password:")
     {
     }
 }

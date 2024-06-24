@@ -1,6 +1,5 @@
 using System.Globalization;
 using GraviddleServer.Code.Parser;
-using TelegramBotNM.Repository.Query;
 
 namespace GraviddleServer.Code.MsSqlRepositoryNM.QueriesNM;
 

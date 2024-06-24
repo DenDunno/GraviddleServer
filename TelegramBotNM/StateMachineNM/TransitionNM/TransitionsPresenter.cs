@@ -6,6 +6,11 @@ namespace TelegramBotNM.StateMachineNM.TransitionNM
     {
         private readonly Dictionary<IState, List<Transition>> _transitions = new();
 
+        public bool IsDeadEnd(IState state)
+        {
+            return _transitions.ContainsKey(state) == false;
+        }
+        
         public void Add(IState from, IState to, ICondition condition)
         {
             if (_transitions.ContainsKey(from) == false)
@@ -26,7 +31,7 @@ namespace TelegramBotNM.StateMachineNM.TransitionNM
                 {
                     if (transition.Condition.IsTrue())
                     {
-                        newState = transition.StateTo;
+                        newState = transition.End;
                         break;
                     }
                 }
