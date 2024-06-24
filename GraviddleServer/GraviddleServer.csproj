@@ -15,8 +15,4 @@
       <ProjectReference Include="..\TelegramBotNM\TelegramBotNM.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Code\Utils\" />
-    </ItemGroup>
-
 </Project>

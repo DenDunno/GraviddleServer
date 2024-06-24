@@ -1,3 +1,4 @@
+using Telegram.Bot.Types.Enums;
 using TelegramBotNM.Bot;
 using TelegramBotNM.Repository;
 using TelegramBotNM.StateMachineNM;
@@ -33,7 +34,7 @@ public class BotStates
         SetAdminRole = new SetAdminRoleState(user, bridge, userRepository.UpdateRole);
         YouAreNotAdmin = new MessageState(bridge, user.Id, "You are not admin. Authorize first");
         YouAreAlreadyAdmin = new MessageState(bridge, user.Id, "You are already admin");
-        ChatsDump = new MessageState(bridge, user.Id, "Chats dump");
+        ChatsDump = new MessageState(bridge, user.Id, new UserRecordsDumpMessage(userRepository.Dump));
         RecordsDump = new MessageState(bridge, user.Id, "Records dump");
         All = new []
         {

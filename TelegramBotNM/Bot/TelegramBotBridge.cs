@@ -1,5 +1,6 @@
 using Telegram.Bot;
 using Telegram.Bot.Types;
+using Telegram.Bot.Types.Enums;
 using TelegramBotNM.Repository.Commands.Contract;
 using TelegramBotNM.UserNM;
 
@@ -16,9 +17,9 @@ public class TelegramBotBridge
         _client = client;
     }
     
-    public async Task SendMessage(string text, long chatId, CancellationToken token)
+    public async Task SendMessage(string text, long chatId, CancellationToken token, ParseMode mode = default)
     {
-        await _client.SendTextMessageAsync(chatId, text, cancellationToken: token);
+        await _client.SendTextMessageAsync(chatId, text, parseMode:mode, cancellationToken: token);
     }
 
     public async Task SendToAll(string text)
