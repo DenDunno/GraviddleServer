@@ -1,3 +1,4 @@
+using GraviddleServer.Code.Bot.Messages;
 using GraviddleServer.Code.Parser;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -25,15 +26,15 @@ public class Endpoints : ControllerBase
         return "Hey there, what are doing here?";
     }
 
-    public string PostLevelResult(string levelRecordJson)
+    public async Task<string> PostLevelResult(string levelRecordJson)
     {
         LevelRecord levelRecord = JsonConvert.DeserializeObject<LevelRecord>(levelRecordJson)!;
-        string levelResultRecord = levelRecord.ToString();
 
-        _notification.Notify(levelResultRecord);
+        string message = await new RecordMessage(levelRecord).GetText();
+        await _notification.Notify(message);
         _recordAdd.Execute(levelRecord);
 
-        return levelResultRecord;
+        return levelRecord.ToString();
     }
 
     public string GetAllRecords()

@@ -2,7 +2,7 @@ using TelegramBotNM.UserNM;
 
 namespace TelegramBotNM.StateMachineNM.UserProvider;
 
-public interface IUserProvider
+public interface ITelegramUserProvider
 {
     TelegramUser Create(long chatId);
 }

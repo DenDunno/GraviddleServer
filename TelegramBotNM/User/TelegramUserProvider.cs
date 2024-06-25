@@ -3,11 +3,11 @@ using TelegramBotNM.UserNM;
 
 namespace TelegramBotNM.StateMachineNM.UserProvider;
 
-public class UserProvider : IUserProvider
+public class TelegramUserProvider : ITelegramUserProvider
 {
     private readonly IRecordFetch<TelegramUser, long> _userFetch;
 
-    public UserProvider(IRecordFetch<TelegramUser, long> userFetch)
+    public TelegramUserProvider(IRecordFetch<TelegramUser, long> userFetch)
     {
         _userFetch = userFetch;
     }

@@ -3,7 +3,6 @@ using Telegram.Bot;
 using Telegram.Bot.Types.Enums;
 using TelegramBotNM.Bot;
 using TelegramBotNM.Commands;
-using TelegramBotNM.Commands.MessageCommands.ChatRepositoryCommands;
 using TelegramBotNM.Router;
 using TelegramBotNM.StateMachineNM;
 using TelegramBotNM.StateMachineNM.UserProvider;
@@ -26,14 +25,14 @@ public class TelegramBotFactory : ITelegramBotFactory
         ITelegramBotClient client = new TelegramBotClient(_token);
         TelegramBotBridge botBridge = new(client, _repositories.TelegramUsers.Dump);
         IStateMachineFactory stateMachineFactory = new BotStateMachineFactory(_repositories, botBridge);
-        IUserProvider userProvider = new UserProvider(_repositories.TelegramUsers.Fetch);
+        ITelegramUserProvider telegramUserProvider = new TelegramUserProvider(_repositories.TelegramUsers.Fetch);
         
         return new TelegramBot(client, botBridge, new IRouterBranch[]
         {
-            new Conversation(_repositories.TelegramUsers, stateMachineFactory, userProvider),
+            new Conversation(_repositories.TelegramUsers, stateMachineFactory, telegramUserProvider),
             new MemberStatusChangedBranch(new Dictionary<ChatMemberStatus, IBotCommand<long>>()
             {
-                { ChatMemberStatus.Kicked, new RemoveChatCommand(_repositories.TelegramUsers.Remove) }
+                //{ ChatMemberStatus.Kicked, new RemoveChatCommand(_repositories.TelegramUsers.Remove) }
             })
         });
     }
