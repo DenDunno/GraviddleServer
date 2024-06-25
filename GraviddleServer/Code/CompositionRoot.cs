@@ -10,10 +10,8 @@ public static class CompositionRoot
 {
     public static SecureData FetchSecureData()
     {
-        return new SecureData(
-            databaseConnectionString: @"",
-            telegramBotToken: "",
-            adminPassword: "");
+        string[] lines = File.ReadAllLines("password.txt");
+        return new SecureData(lines[0], lines[1], lines[2]);
     }
     
     public static TelegramBot CreateTelegramBot(Repositories repositories, SecureData data)

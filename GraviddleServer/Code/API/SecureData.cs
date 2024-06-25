@@ -6,7 +6,7 @@ public class SecureData
     public readonly string TelegramBotToken;
     public readonly string AdminPassword;
 
-    public SecureData(string telegramBotToken, string adminPassword, string databaseConnectionString)
+    public SecureData(string databaseConnectionString, string telegramBotToken, string adminPassword)
     {
         DatabaseConnectionString = databaseConnectionString;
         TelegramBotToken = telegramBotToken;
