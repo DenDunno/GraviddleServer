@@ -17,7 +17,7 @@ public class TelegramBotBridge
         _client = client;
     }
     
-    public async Task SendMessage(string text, long chatId, CancellationToken token, ParseMode mode = default)
+    public async Task SendMessage(string text, long chatId, CancellationToken token, ParseMode? mode = null)
     {
         await _client.SendTextMessageAsync(chatId, text, parseMode:mode, cancellationToken: token);
     }

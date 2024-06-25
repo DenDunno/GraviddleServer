@@ -1,7 +1,8 @@
-using TelegramBotNM.StateMachineNM;
-
-namespace GraviddleServer.Code.Bot;
+namespace TelegramBotNM.StateMachineNM.State;
 
 public class EmptyState : BaseState
 {
+    public EmptyState(string name) : base(name)
+    {
+    }
 }

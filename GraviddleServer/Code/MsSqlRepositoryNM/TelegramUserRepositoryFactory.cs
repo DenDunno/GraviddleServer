@@ -8,16 +8,16 @@ using TelegramBotNM.UserNM;
 
 namespace GraviddleServer.Code.MsSqlRepositoryNM;
 
-public class UserRepositoryFactory : IFactory<UserRepository>
+public class TelegramUserRepositoryFactory : IFactory<TelegramUsersRepository>
 {
     private readonly IDatabaseBridge _bridge;
 
-    public UserRepositoryFactory(IDatabaseBridge bridge)
+    public TelegramUserRepositoryFactory(IDatabaseBridge bridge)
     {
         _bridge = bridge;
     }
 
-    public UserRepository Create()
+    public TelegramUsersRepository Create()
     {
         UserQueries queries = new();
         UserParser parser = new();
@@ -25,7 +25,7 @@ public class UserRepositoryFactory : IFactory<UserRepository>
         RecordCommand<TelegramUser, long> addCommand = new(_bridge, new QueryBuilder<TelegramUser>(queries.Insert));
         RecordRemoveCommand<long> removeCommand = new(_bridge, new QueryBuilder<long>(queries.Remove));
         
-        return new UserRepository
+        return new TelegramUsersRepository
         {
             Add = new RecordSafeAdd<TelegramUser, long>(containsCommand, addCommand),
             Remove = new RecordSafeRemove<long>(containsCommand, removeCommand),

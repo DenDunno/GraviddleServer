@@ -16,7 +16,14 @@ public class TelegramBotRouter
     {
         foreach (IRouterBranch routerBranch in _routerBranches)
         {
-            await routerBranch.Handle(update, cancellationToken);
+            try
+            {
+                await routerBranch.Handle(update, cancellationToken);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
         }
     }
 

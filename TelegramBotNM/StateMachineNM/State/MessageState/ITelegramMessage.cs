@@ -1,9 +1,9 @@
 using Telegram.Bot.Types.Enums;
 
-namespace TelegramBotNM.StateMachineNM;
+namespace TelegramBotNM.StateMachineNM.State.MessageState;
 
 public interface ITelegramMessage
 {
-    ParseMode ParseMode { get; }
-    public string GetText();
+    ParseMode? Mode { get; }
+    public Task<string> GetText();
 }

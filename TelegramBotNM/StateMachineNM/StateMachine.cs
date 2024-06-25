@@ -1,3 +1,4 @@
+using TelegramBotNM.StateMachineNM.State;
 using TelegramBotNM.StateMachineNM.TransitionNM;
 
 namespace TelegramBotNM.StateMachineNM;

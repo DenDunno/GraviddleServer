@@ -11,13 +11,13 @@ namespace GraviddleServer.Code.Bot;
 public class Conversation : RouterBranch<Message>
 {
     private readonly IStateMachineFactory _stateMachineFactory;
-    private readonly UserRepository _userRepository;
+    private readonly TelegramUsersRepository _telegramUsersRepository;
     private readonly IUserProvider _userProvider;
     
-    public Conversation(UserRepository userRepository, IStateMachineFactory stateMachineFactory, IUserProvider userProvider)
+    public Conversation(TelegramUsersRepository telegramUsersRepository, IStateMachineFactory stateMachineFactory, IUserProvider userProvider)
     {
         _stateMachineFactory = stateMachineFactory;
-        _userRepository = userRepository;
+        _telegramUsersRepository = telegramUsersRepository;
         _userProvider = userProvider;
     }
 
@@ -32,7 +32,7 @@ public class Conversation : RouterBranch<Message>
 
         if (conversationResult.NewState)
         {
-            _userRepository.UpdateConversation.Execute(user with { ConversationState = conversationResult.NewStateId });
+            _telegramUsersRepository.UpdateConversation.Execute(user with { ConversationState = conversationResult.NewStateId });
         }
     }
 }

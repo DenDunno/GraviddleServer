@@ -1,6 +1,6 @@
 using Telegram.Bot.Types.Enums;
 
-namespace TelegramBotNM.StateMachineNM;
+namespace TelegramBotNM.StateMachineNM.State.MessageState;
 
 public class PlainText : ITelegramMessage
 {
@@ -11,6 +11,6 @@ public class PlainText : ITelegramMessage
         _text = text;
     }
 
-    public ParseMode ParseMode => default;
-    public string GetText() => _text;
+    public ParseMode? Mode => null;
+    public Task<string> GetText() => Task.FromResult(_text);
 }

@@ -1,27 +1,27 @@
 using TelegramBotNM.Bot;
-using TelegramBotNM.Repository;
 using TelegramBotNM.StateMachineNM;
+using TelegramBotNM.StateMachineNM.State;
 using TelegramBotNM.StateMachineNM.TransitionNM;
 using TelegramBotNM.StateMachineNM.TransitionNM.Condition;
 using TelegramBotNM.UserNM;
 
-namespace GraviddleServer.Code.Bot;
+namespace GraviddleServer.Code.Bot.StateMachineNM;
 
 public class BotStateMachineFactory : IStateMachineFactory
 {
-    private readonly UserRepository _userRepository;
     private readonly TelegramBotBridge _botBridge;
+    private readonly Repositories _repositories;
 
-    public BotStateMachineFactory(UserRepository userRepository, TelegramBotBridge botBridge)
+    public BotStateMachineFactory(Repositories repositories, TelegramBotBridge botBridge)
     {
-        _userRepository = userRepository;
+        _repositories = repositories;
         _botBridge = botBridge;
     }
 
     public StateMachine Create(string userInput, TelegramUser user)
     {
         Conditions conditions = new(user, userInput);
-        BotStates states = new(user, _userRepository, _botBridge);
+        BotStates states = new(user, _repositories, _botBridge);
         StateIdCalculator stateIdCalculator = new(states.All);
         stateIdCalculator.Initialize();
 
@@ -35,21 +35,23 @@ public class BotStateMachineFactory : IStateMachineFactory
     private TransitionsPresenter GetTransitions(BotStates states, Conditions conditions)
     {
         TransitionsPresenter transitions = new();
-        
-        transitions.Add(states.Root, states.Start, conditions.Start);
-        transitions.Add(states.Root, states.Stop, conditions.Stop);
-        transitions.Add(states.Root, states.Admin, conditions.IsAdmin);
+
+        ConnectActiveStatesToCommandsListener(transitions, states, conditions.AnyCommandEntered);
+        transitions.Add(states.CommandsListener, states.Start, conditions.Start);
+        transitions.Add(states.CommandsListener, states.Stop, conditions.Stop);
+        transitions.Add(states.CommandsListener, states.Admin, conditions.IsAdmin);
         transitions.Add(states.Admin, states.YouAreAlreadyAdmin, conditions.Authorize);
-        transitions.Add(states.Admin, states.ChatsDump, conditions.ChatsDump);
+        transitions.Add(states.Admin, states.TelegramUsersDump, conditions.TelegramUsersDump);
         transitions.Add(states.Admin, states.RecordsDump, conditions.RecordsDump);
-        transitions.Add(states.Root, states.User, conditions.IsUser);
+        transitions.Add(states.CommandsListener, states.User, conditions.IsUser);
         transitions.Add(states.User, states.YouAreNotAdmin, conditions.RestrictedCommand);
-        transitions.Add(states.User, states.Authorization, conditions.Authorize);
+        transitions.Add(states.User, states.EnterPassword, conditions.Authorize);
+        transitions.Add(states.EnterPassword, states.Authorization, new True());
         transitions.Add(states.Authorization, states.SetAdminRole, conditions.ValidAdminPassword);
         transitions.Add(states.Authorization, states.InvalidPassword, conditions.BadAdminPassword);
         transitions.Add(states.InvalidPassword, states.Authorization, new True());
         ConnectDeadEndsToRoot(transitions, states);
-        
+
         return transitions;
     }
 
@@ -60,6 +62,17 @@ public class BotStateMachineFactory : IStateMachineFactory
             if (transitions.IsDeadEnd(state))
             {
                 transitions.Add(state, states.Root, new True());
+            }
+        }
+    }
+
+    private void ConnectActiveStatesToCommandsListener(TransitionsPresenter transitions, BotStates states, ICondition anyCommandEntered)
+    {
+        foreach (IState state in states.All)
+        {
+            if (state.IsPassive == false)
+            {
+                transitions.Add(state, states.CommandsListener, anyCommandEntered);
             }
         }
     }

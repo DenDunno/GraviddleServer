@@ -3,7 +3,7 @@ using TelegramBotNM.UserNM;
 
 namespace TelegramBotNM.Repository;
 
-public class UserRepository
+public class TelegramUsersRepository
 {
     public required IRecordFetch<TelegramUser, long> Fetch { get; init; }
     public required IRecordContains<long> Contains { get; init; }

@@ -1,7 +1,6 @@
-using Telegram.Bot.Types.Enums;
 using TelegramBotNM.Bot;
 
-namespace TelegramBotNM.StateMachineNM;
+namespace TelegramBotNM.StateMachineNM.State.MessageState;
 
 public class MessageState : BaseState
 {
@@ -14,7 +13,7 @@ public class MessageState : BaseState
     {
     }
     
-    public MessageState(TelegramBotBridge bridge, long chatId, ITelegramMessage message)
+    public MessageState(TelegramBotBridge bridge, long chatId, ITelegramMessage message) 
     {
         _message = message;
         _chatId = chatId;
@@ -23,6 +22,7 @@ public class MessageState : BaseState
 
     protected override async Task OnEnter(CancellationToken token)
     {
-        await _bridge.SendMessage(_message.GetText(), _chatId, token, _message.ParseMode);
+        string text = await _message.GetText();
+        await _bridge.SendMessage(text, _chatId, token, _message.Mode);
     }
 }

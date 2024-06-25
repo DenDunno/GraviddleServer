@@ -1,3 +1,5 @@
+using TelegramBotNM.StateMachineNM.State;
+
 namespace TelegramBotNM.StateMachineNM;
 
 public class StateIdCalculator

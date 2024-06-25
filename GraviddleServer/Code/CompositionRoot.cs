@@ -3,7 +3,6 @@ using GraviddleServer.Code.Bot;
 using GraviddleServer.Code.MsSqlRepositoryNM;
 using TelegramBotNM.Bot;
 using TelegramBotNM.Notification;
-using TelegramBotNM.Repository;
 
 namespace GraviddleServer.Code;
 
@@ -17,16 +16,15 @@ public static class CompositionRoot
             adminPassword: "");
     }
     
-    public static TelegramBot CreateTelegramBot(IDatabaseBridge bridge, SecureData secureData)
+    public static TelegramBot CreateTelegramBot(Repositories repositories, SecureData data)
     {
-        ITelegramBotFactory telegramBotFactory = new TelegramBotFactory(bridge, secureData.TelegramBotToken);
+        ITelegramBotFactory telegramBotFactory = new TelegramBotFactory(repositories, data.TelegramBotToken);
         return telegramBotFactory.Create();
     }
 
-    public static WebApplication CreateWebApplication(INotification notification, IDatabaseBridge bridge)
+    public static WebApplication CreateWebApplication(INotification notification, AnalyticsRepository analyticsRepository)
     {
         WebApplication app = WebApplication.Create();
-        AnalyticsRepository analyticsRepository = new AnalyticsRepositoryFactory(bridge).Create();
         Endpoints endpoints = new(notification, analyticsRepository.Add, analyticsRepository.Dump);
         
         app.MapGet("/", endpoints.Greet);
