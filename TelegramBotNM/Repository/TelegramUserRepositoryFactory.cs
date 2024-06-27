@@ -19,7 +19,7 @@ public class TelegramUserRepositoryFactory : IFactory<TelegramUsersRepository>
 
     public TelegramUsersRepository Create()
     {
-        UserQueries queries = new();
+        TelegramUserQueries queries = new();
         UserParser parser = new();
         RecordСontainsCommand<long> containsCommand = new(_bridge, new QueryBuilder<long>(queries.Contains));
         RecordCommand<TelegramUser, long> addCommand = new(_bridge, new QueryBuilder<TelegramUser>(queries.Insert));

@@ -11,7 +11,7 @@ public class AnalyticsQueries
         string escapedLevel = element.Level.Replace("'", "''");
 
         return
-            $@"INSERT INTO Analytics (DeviceId, Name, Stars, LevelsName, Time, DeathCount) VALUES ('{element.Id}', 
+            $@"INSERT INTO Analytics (DeviceId, Name, Stars, Level, Time, DeathCount) VALUES ('{element.Id}', 
                                                                                           '{escapedName}',
                                                                                           {element.Stars},
                                                                                           '{escapedLevel}', 

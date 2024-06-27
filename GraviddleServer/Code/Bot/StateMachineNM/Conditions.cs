@@ -17,16 +17,16 @@ public class Conditions
     public readonly ICondition RestrictedCommand;
     public readonly ICondition AnyCommandEntered;
 
-    public Conditions(TelegramUser user, string input)
+    public Conditions(TelegramUser user, string userInput, string adminPassword)
     {
         IsAdmin = new IsEqual<Role>(user.Role, Role.Admin);
         IsUser = new Not(IsAdmin);
-        Start = new IsEqual<string>(input, "/start");
-        Stop = new IsEqual<string>(input, "/stop");
-        Authorize = new IsEqual<string>(input, "/authorize");
-        TelegramUsersDump = new IsEqual<string>(input, "/telegram_users_dump");
-        RecordsDump = new IsEqual<string>(input, "/records_dump");
-        ValidAdminPassword = new IsEqual<string>(input, "1223");
+        Start = new IsEqual<string>(userInput, "/start");
+        Stop = new IsEqual<string>(userInput, "/stop");
+        Authorize = new IsEqual<string>(userInput, "/authorize");
+        TelegramUsersDump = new IsEqual<string>(userInput, "/telegram_users_dump");
+        RecordsDump = new IsEqual<string>(userInput, "/records_dump");
+        ValidAdminPassword = new IsEqual<string>(userInput, adminPassword);
         AnyCommandEntered = new Any(TelegramUsersDump, RecordsDump, Stop, Start, Authorize);
         BadAdminPassword = new Not(ValidAdminPassword);
         RestrictedCommand = new Any(TelegramUsersDump, RecordsDump);

@@ -16,7 +16,7 @@ public static class CompositionRoot
     
     public static TelegramBot CreateTelegramBot(Repositories repositories, SecureData data)
     {
-        ITelegramBotFactory telegramBotFactory = new TelegramBotFactory(repositories, data.TelegramBotToken);
+        ITelegramBotFactory telegramBotFactory = new TelegramBotFactory(repositories, data);
         return telegramBotFactory.Create();
     }
 

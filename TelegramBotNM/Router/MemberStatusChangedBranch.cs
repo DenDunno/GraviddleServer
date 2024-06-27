@@ -18,6 +18,9 @@ public class MemberStatusChangedBranch : RouterBranch<ChatMemberUpdated>
 
     protected override async Task OnHandle(ChatMemberUpdated message, CancellationToken cancellationToken)
     {
-        await _commands[message.NewChatMember.Status].Handle(message.Chat.Id, cancellationToken);
+        if (_commands.TryGetValue(message.NewChatMember.Status, out IBotCommand<long>? command))
+        {
+            await command.Handle(message.Chat.Id, cancellationToken);    
+        }
     }
 }

@@ -1,24 +1,25 @@
+using TelegramBotNM.Bot;
 using TelegramBotNM.Repository.Commands.Contract;
-using TelegramBotNM.StateMachineNM.State;
+using TelegramBotNM.StateMachineNM.State.MessageState;
 using TelegramBotNM.UserNM;
 
 namespace GraviddleServer.Code.Bot.StateMachineNM.States;
 
-public class StartState : BaseState
+public class StartState : MessageState
 {
     private readonly IRecordAdd<TelegramUser, long> _recordAdd;
     private readonly TelegramUser _user;
 
-    public StartState(IRecordAdd<TelegramUser, long> recordAdd, TelegramUser user) : base("Start")
+    public StartState(TelegramBotBridge bridge, TelegramUser user, IRecordAdd<TelegramUser, long> telegramUsersAdd) 
+        : base(bridge, user.Id, "You will now receive analytics notifications. Enter the command 'stop' to terminate the bot.")
     {
-        _recordAdd = recordAdd;
+        _recordAdd = telegramUsersAdd;
         _user = user;
     }
 
-    protected override Task OnEnter(CancellationToken token)
+    protected override async Task OnEnter(CancellationToken token)
     {
         _recordAdd.Execute(_user);
-        
-        return Task.CompletedTask;
+        await base.OnEnter(token);
     }
 }

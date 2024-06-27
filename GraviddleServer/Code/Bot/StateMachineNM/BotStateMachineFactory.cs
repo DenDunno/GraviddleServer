@@ -11,16 +11,18 @@ public class BotStateMachineFactory : IStateMachineFactory
 {
     private readonly TelegramBotBridge _botBridge;
     private readonly Repositories _repositories;
+    private readonly string _adminPassword;
 
-    public BotStateMachineFactory(Repositories repositories, TelegramBotBridge botBridge)
+    public BotStateMachineFactory(Repositories repositories, TelegramBotBridge botBridge, string adminPassword)
     {
+        _adminPassword = adminPassword;
         _repositories = repositories;
         _botBridge = botBridge;
     }
 
     public StateMachine Create(string userInput, TelegramUser user)
     {
-        Conditions conditions = new(user, userInput);
+        Conditions conditions = new(user, userInput, _adminPassword);
         BotStates states = new(user, _repositories, _botBridge);
         StateIdCalculator stateIdCalculator = new(states.All);
         stateIdCalculator.Initialize();

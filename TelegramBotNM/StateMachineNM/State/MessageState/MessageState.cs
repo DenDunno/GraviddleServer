@@ -6,7 +6,7 @@ public class MessageState : BaseState
 {
     private readonly TelegramBotBridge _bridge;
     private readonly ITelegramMessage _message;
-    private readonly long _chatId;
+    protected readonly long ChatId;
 
     public MessageState(TelegramBotBridge bridge, long chatId, string text)
         : this(bridge, chatId, new PlainText(text))
@@ -16,12 +16,12 @@ public class MessageState : BaseState
     public MessageState(TelegramBotBridge bridge, long chatId, ITelegramMessage message) 
     {
         _message = message;
-        _chatId = chatId;
+        ChatId = chatId;
         _bridge = bridge;
     }
 
     protected override async Task OnEnter(CancellationToken token)
     {
-        await _bridge.SendMessage(_message, _chatId, token);
+        await _bridge.SendMessage(_message, ChatId, token);
     }
 }
