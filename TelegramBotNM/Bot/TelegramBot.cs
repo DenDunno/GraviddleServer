@@ -1,3 +1,4 @@
+using GraviddleServer.Code.Logger;
 using Telegram.Bot;
 using TelegramBotNM.Router;
 
@@ -9,9 +10,9 @@ public class TelegramBot
     private readonly ITelegramBotClient _client;
     public readonly TelegramBotBridge Bridge;
     
-    public TelegramBot(ITelegramBotClient client, TelegramBotBridge bridge, IRouterBranch[] branches)
+    public TelegramBot(ITelegramBotClient client, TelegramBotBridge bridge, ILogger logger, IRouterBranch[] branches)
     {
-        _router = new TelegramBotRouter(branches);
+        _router = new TelegramBotRouter(branches, logger);
         _client = client;
         Bridge = bridge;
     }

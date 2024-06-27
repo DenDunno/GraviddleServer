@@ -24,6 +24,7 @@ public class TelegramUserRepositoryFactory : IFactory<TelegramUsersRepository>
         RecordСontainsCommand<long> containsCommand = new(_bridge, new QueryBuilder<long>(queries.Contains));
         RecordCommand<TelegramUser, long> addCommand = new(_bridge, new QueryBuilder<TelegramUser>(queries.Insert));
         RecordRemoveCommand<long> removeCommand = new(_bridge, new QueryBuilder<long>(queries.Remove));
+        RecordsDumpCommand<TelegramUser> userDump = new(_bridge, parser, new QueryProvider(queries.GetAll()));
         
         return new TelegramUsersRepository
         {
@@ -33,7 +34,8 @@ public class TelegramUserRepositoryFactory : IFactory<TelegramUsersRepository>
             UpdateRole = new RecordCommand<TelegramUser, long>(_bridge, new QueryBuilder<TelegramUser>(queries.UpdateRole)),
             Contains = new RecordСontainsCommand<long>(_bridge, new QueryBuilder<long>(queries.Contains)),
             Fetch = new RecordFetchCommand<TelegramUser, long>(_bridge, parser, new QueryBuilder<long>(queries.Fetch)),
-            Dump = new RecordsDumpCommand<TelegramUser>(_bridge, parser, new QueryProvider(queries.GetAll()))
+            Dump = userDump,
+            AdminsDump = new DumpByRole(userDump, Role.Admin)
         };
     }
 }

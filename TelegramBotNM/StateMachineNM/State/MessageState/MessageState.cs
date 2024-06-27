@@ -22,6 +22,6 @@ public class MessageState : BaseState
 
     protected override async Task OnEnter(CancellationToken token)
     {
-        await _bridge.SendMessage(_message, ChatId, token);
+        await _bridge.Send(_message, ChatId, token);
     }
 }

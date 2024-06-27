@@ -12,4 +12,5 @@ public class TelegramUsersRepository
     public required IRecordRemove<long> Remove { get; init; }
     public required IRecordsDump<TelegramUser> Dump { get; init; }
     public required IRecordAdd<TelegramUser, long> Add { get; init; }
+    public required IRecordsDump<long> AdminsDump { get; init; }
 }

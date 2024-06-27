@@ -1,3 +1,4 @@
+using GraviddleServer.Code.Logger;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 
@@ -6,10 +7,12 @@ namespace TelegramBotNM.Router;
 public class TelegramBotRouter
 {
     private readonly IEnumerable<IRouterBranch> _routerBranches;
+    private readonly ILogger _logger;
 
-    public TelegramBotRouter(IEnumerable<IRouterBranch> routerBranches)
+    public TelegramBotRouter(IEnumerable<IRouterBranch> routerBranches, ILogger logger)
     {
         _routerBranches = routerBranches;
+        _logger = logger;
     }
 
     public async Task HandleInput(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
@@ -20,9 +23,9 @@ public class TelegramBotRouter
             {
                 await routerBranch.Handle(update, cancellationToken);
             }
-            catch (Exception e)
+            catch (Exception exception)
             {
-                Console.WriteLine(e);
+                await _logger.Log(exception.ToString());
             }
         }
     }
