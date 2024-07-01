@@ -1,9 +1,10 @@
+using GraviddleServer.Code.Repository;
 using TelegramBotNM.Bot;
 using TelegramBotNM.StateMachineNM;
 using TelegramBotNM.StateMachineNM.State;
 using TelegramBotNM.StateMachineNM.TransitionNM;
 using TelegramBotNM.StateMachineNM.TransitionNM.Condition;
-using TelegramBotNM.UserNM;
+using TelegramBotNM.User;
 
 namespace GraviddleServer.Code.Bot.StateMachineNM;
 

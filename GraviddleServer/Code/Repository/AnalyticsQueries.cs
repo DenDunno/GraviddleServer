@@ -1,7 +1,7 @@
 using System.Globalization;
-using GraviddleServer.Code.Parser;
+using GraviddleServer.Code.API;
 
-namespace GraviddleServer.Code.MsSqlRepositoryNM.QueriesNM;
+namespace GraviddleServer.Code.Repository;
 
 public class AnalyticsQueries 
 {

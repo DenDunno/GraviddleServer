@@ -1,6 +1,4 @@
-using TelegramBotNM.UserNM;
-
-namespace TelegramBotNM.StateMachineNM.UserProvider;
+namespace TelegramBotNM.User;
 
 public interface ITelegramUserProvider
 {

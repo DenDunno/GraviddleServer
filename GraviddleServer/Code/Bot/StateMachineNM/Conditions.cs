@@ -1,5 +1,5 @@
 using TelegramBotNM.StateMachineNM.TransitionNM.Condition;
-using TelegramBotNM.UserNM;
+using TelegramBotNM.User;
 
 namespace GraviddleServer.Code.Bot.StateMachineNM;
 

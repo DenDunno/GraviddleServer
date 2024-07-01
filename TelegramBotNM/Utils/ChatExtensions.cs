@@ -1,6 +1,6 @@
 using Telegram.Bot.Types;
 
-namespace TelegramBotNM.Extensions;
+namespace TelegramBotNM.Utils;
 
 public static class ChatExtensions
 {

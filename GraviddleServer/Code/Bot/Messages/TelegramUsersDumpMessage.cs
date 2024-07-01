@@ -1,10 +1,10 @@
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using TelegramBotNM.Bot;
-using TelegramBotNM.Extensions;
 using TelegramBotNM.Repository.Commands.Contract;
 using TelegramBotNM.StateMachineNM.State.MessageState;
-using TelegramBotNM.UserNM;
+using TelegramBotNM.User;
+using TelegramBotNM.Utils;
 
 namespace GraviddleServer.Code.Bot.Messages;
 

@@ -1,7 +1,7 @@
 using TelegramBotNM.Bot;
 using TelegramBotNM.Repository.Commands.Contract;
 using TelegramBotNM.StateMachineNM.State.MessageState;
-using TelegramBotNM.UserNM;
+using TelegramBotNM.User;
 
 namespace GraviddleServer.Code.Bot.StateMachineNM.States;
 

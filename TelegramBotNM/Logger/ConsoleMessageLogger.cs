@@ -1,6 +1,6 @@
-namespace GraviddleServer.Code.Logger;
+namespace TelegramBotNM.Logger;
 
-public class ConsoleLogger : ILogger
+public class ConsoleMessageLogger : IMessageLogger
 {
     public Task Log(string text)
     {

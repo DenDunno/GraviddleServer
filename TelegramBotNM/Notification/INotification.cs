@@ -1,6 +1,6 @@
 namespace TelegramBotNM.Notification;
 
-public interface INotification
+public interface INotification<in T>
 {
-    Task Notify(string text);
+    Task Notify(T record);
 }

@@ -1,9 +1,10 @@
 using GraviddleServer.Code.Bot.Messages;
 using GraviddleServer.Code.Bot.StateMachineNM.States;
+using GraviddleServer.Code.Repository;
 using TelegramBotNM.Bot;
 using TelegramBotNM.StateMachineNM.State;
 using TelegramBotNM.StateMachineNM.State.MessageState;
-using TelegramBotNM.UserNM;
+using TelegramBotNM.User;
 
 namespace GraviddleServer.Code.Bot.StateMachineNM;
 

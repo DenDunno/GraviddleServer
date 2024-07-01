@@ -1,4 +1,4 @@
-namespace TelegramBotNM.Commands;
+namespace TelegramBotNM.Router.Commands;
 
 public interface IBotCommand<in TInput>
 {

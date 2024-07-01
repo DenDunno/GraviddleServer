@@ -1,14 +1,14 @@
 using GraviddleServer.Code.API;
 using GraviddleServer.Code.Bot.StateMachineNM;
-using GraviddleServer.Code.Logger;
+using GraviddleServer.Code.Repository;
 using Telegram.Bot;
 using Telegram.Bot.Types.Enums;
 using TelegramBotNM.Bot;
-using TelegramBotNM.Commands;
+using TelegramBotNM.Logger;
 using TelegramBotNM.Router;
+using TelegramBotNM.Router.Commands;
 using TelegramBotNM.StateMachineNM;
-using TelegramBotNM.StateMachineNM.UserProvider;
-using ILogger = GraviddleServer.Code.Logger.ILogger;
+using TelegramBotNM.User;
 
 namespace GraviddleServer.Code.Bot;
 
@@ -29,9 +29,9 @@ public class TelegramBotFactory : ITelegramBotFactory
         TelegramBotBridge botBridge = new(client, _repositories.TelegramUsers.Dump);
         IStateMachineFactory stateMachineFactory = new BotStateMachineFactory(_repositories, botBridge, _secureData.AdminPassword);
         ITelegramUserProvider telegramUserProvider = new TelegramUserProvider(_repositories.TelegramUsers.Fetch);
-        ILogger logger = new BotAdminLogger(botBridge, _repositories.TelegramUsers.AdminsDump);
+        IMessageLogger messageLogger = new BotAdminMessageLogger(botBridge, _repositories.TelegramUsers.AdminsDump);
         
-        return new TelegramBot(client, botBridge, logger, new IRouterBranch[]
+        return new TelegramBot(client, botBridge, messageLogger, new IRouterBranch[]
         {
             new Conversation(_repositories.TelegramUsers, stateMachineFactory, telegramUserProvider),
             new MemberStatusChangedBranch(new Dictionary<ChatMemberStatus, IBotCommand<long>>()

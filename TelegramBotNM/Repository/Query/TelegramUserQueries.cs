@@ -1,6 +1,6 @@
-using TelegramBotNM.UserNM;
+using TelegramBotNM.User;
 
-namespace GraviddleServer.Code.MsSqlRepositoryNM.QueriesNM;
+namespace TelegramBotNM.Repository.Query;
 
 public class TelegramUserQueries 
 {

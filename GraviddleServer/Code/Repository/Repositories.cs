@@ -1,7 +1,6 @@
-using GraviddleServer.Code.MsSqlRepositoryNM;
 using TelegramBotNM.Repository;
 
-namespace GraviddleServer.Code;
+namespace GraviddleServer.Code.Repository;
 
 public class Repositories
 {

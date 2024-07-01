@@ -2,7 +2,7 @@ using System.Data;
 using System.Data.SqlClient;
 using TelegramBotNM.Repository;
 
-namespace GraviddleServer.Code.MsSqlRepositoryNM;
+namespace GraviddleServer.Code.Repository;
 
 public class MsSqlDatabaseBridge : IDatabaseBridge
 {

@@ -1,4 +1,4 @@
-namespace TelegramBotNM.UserNM;
+namespace TelegramBotNM.User;
 
 public enum Role
 {

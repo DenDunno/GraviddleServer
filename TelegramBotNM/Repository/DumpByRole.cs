@@ -1,5 +1,5 @@
 using TelegramBotNM.Repository.Commands.Contract;
-using TelegramBotNM.UserNM;
+using TelegramBotNM.User;
 
 namespace TelegramBotNM.Repository;
 

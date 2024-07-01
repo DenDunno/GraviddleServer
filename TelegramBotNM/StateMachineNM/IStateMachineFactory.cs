@@ -1,4 +1,4 @@
-using TelegramBotNM.UserNM;
+using TelegramBotNM.User;
 
 namespace TelegramBotNM.StateMachineNM;
 

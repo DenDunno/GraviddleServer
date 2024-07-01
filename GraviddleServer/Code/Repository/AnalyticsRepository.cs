@@ -1,7 +1,7 @@
-using GraviddleServer.Code.Parser;
+using GraviddleServer.Code.API;
 using TelegramBotNM.Repository.Commands.Contract;
 
-namespace GraviddleServer.Code.MsSqlRepositoryNM;
+namespace GraviddleServer.Code.Repository;
 
 public class AnalyticsRepository 
 {

@@ -1,5 +1,5 @@
 using System.Data;
-using TelegramBotNM.UserNM;
+using TelegramBotNM.User;
 
 namespace TelegramBotNM.Parser;
 

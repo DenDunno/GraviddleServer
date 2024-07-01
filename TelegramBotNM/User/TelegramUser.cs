@@ -1,5 +1,5 @@
 using TelegramBotNM.Repository;
 
-namespace TelegramBotNM.UserNM;
+namespace TelegramBotNM.User;
 
 public record TelegramUser(long Id, Role Role, int ConversationState) : IDatabaseModel<long>;

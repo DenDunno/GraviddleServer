@@ -1,4 +1,4 @@
-namespace TelegramBotNM.Extensions;
+namespace TelegramBotNM.Utils;
 
 public static class EnumerableExtensions
 {

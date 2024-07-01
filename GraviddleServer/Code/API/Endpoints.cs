@@ -1,47 +1,52 @@
-using GraviddleServer.Code.Bot.Messages;
-using GraviddleServer.Code.Parser;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 using TelegramBotNM.Notification;
 using TelegramBotNM.Repository.Commands.Contract;
 
 namespace GraviddleServer.Code.API;
 
-[ApiController]
-public class Endpoints : ControllerBase
+public class Endpoints
 {
-    private readonly IRecordsDump<LevelRecord> _recordsDump;
+    private readonly INotification<LevelRecord> _levelRecordNotification;
+    private readonly INotification<DeathRecord> _deathRecordNotification;
     private readonly IRecordAdd<LevelRecord, string> _recordAdd;
-    private readonly INotification _notification;
+    private readonly IRecordsDump<LevelRecord> _recordsDump;
 
-    public Endpoints(INotification notification, IRecordAdd<LevelRecord, string> recordAdd, IRecordsDump<LevelRecord> recordsDump)
+    public Endpoints(IRecordAdd<LevelRecord, string> recordAdd, IRecordsDump<LevelRecord> recordsDump,
+        INotification<LevelRecord> levelRecordNotification, INotification<DeathRecord> deathRecordNotification)
     {
-        _notification = notification;
+        _levelRecordNotification = levelRecordNotification;
+        _deathRecordNotification = deathRecordNotification;
         _recordsDump = recordsDump;
         _recordAdd = recordAdd;
     }
 
+    [HttpGet]
     public string Greet()
     {
         return "Hey there, what are doing here?";
     }
 
-    public async Task<string> PostLevelResult(string levelRecordJson)
-    {
-        LevelRecord levelRecord = JsonConvert.DeserializeObject<LevelRecord>(levelRecordJson)!;
-
-        string message = await new RecordMessage(levelRecord).GetText();
-        await _notification.Notify(message);
-        _recordAdd.Execute(levelRecord);
-
-        return levelRecord.ToString();
-    }
-
+    [HttpGet]
     public string GetAllRecords()
     {
         IList<LevelRecord> dump = _recordsDump.Execute();
 
-        return dump.Any() ? dump.Select(x => x.ToString()).Aggregate((s, s1) => s + '\n' + s1) : 
-            "No records"; 
+        return dump.Any() ? dump.Select(x => x.ToString()).Aggregate((s, s1) => s + '\n' + s1) : "No records";
+    }
+
+    [HttpPost]
+    public async Task<IResult> PostLevelRecord([FromBody] LevelRecord levelRecord)
+    {
+        await _levelRecordNotification.Notify(levelRecord);
+        _recordAdd.Execute(levelRecord);
+
+        return Results.Ok(levelRecord);
+    }
+
+    [HttpPost]
+    public async Task<IResult> PostDeathRecord([FromBody] DeathRecord deathRecord)
+    {
+        await _deathRecordNotification.Notify(deathRecord);
+        return Results.Ok(deathRecord);
     }
 }

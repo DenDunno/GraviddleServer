@@ -1,12 +1,10 @@
-using GraviddleServer.Code.MsSqlRepositoryNM.QueriesNM;
-using TelegramBotNM.Factory;
 using TelegramBotNM.Parser;
-using TelegramBotNM.Repository;
 using TelegramBotNM.Repository.Commands;
 using TelegramBotNM.Repository.Query;
-using TelegramBotNM.UserNM;
+using TelegramBotNM.User;
+using TelegramBotNM.Utils;
 
-namespace GraviddleServer.Code.MsSqlRepositoryNM;
+namespace TelegramBotNM.Repository;
 
 public class TelegramUserRepositoryFactory : IFactory<TelegramUsersRepository>
 {

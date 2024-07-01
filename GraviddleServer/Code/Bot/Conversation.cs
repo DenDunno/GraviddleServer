@@ -3,8 +3,7 @@ using Telegram.Bot.Types.Enums;
 using TelegramBotNM.Repository;
 using TelegramBotNM.Router;
 using TelegramBotNM.StateMachineNM;
-using TelegramBotNM.StateMachineNM.UserProvider;
-using TelegramBotNM.UserNM;
+using TelegramBotNM.User;
 
 namespace GraviddleServer.Code.Bot;
 

@@ -1,6 +1,6 @@
 using TelegramBotNM.Repository.Commands.Contract;
 
-namespace TelegramBotNM.Commands;
+namespace TelegramBotNM.Router.Commands;
 
 public class StopCommand : IBotCommand<long>
 {

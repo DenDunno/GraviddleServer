@@ -3,7 +3,7 @@ using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using TelegramBotNM.Repository.Commands.Contract;
 using TelegramBotNM.StateMachineNM.State.MessageState;
-using TelegramBotNM.UserNM;
+using TelegramBotNM.User;
 
 namespace TelegramBotNM.Bot;
 

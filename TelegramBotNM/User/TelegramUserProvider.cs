@@ -1,7 +1,6 @@
 using TelegramBotNM.Repository.Commands.Contract;
-using TelegramBotNM.UserNM;
 
-namespace TelegramBotNM.StateMachineNM.UserProvider;
+namespace TelegramBotNM.User;
 
 public class TelegramUserProvider : ITelegramUserProvider
 {
