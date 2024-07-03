@@ -10,7 +10,7 @@ public class FormattedStringNotification<TInput> : INotification<TInput>
         _stringNotification = stringNotification;
         _formatter = formatter;
     }
-
+    
     public async Task Notify(TInput record)
     {
         string stringRecord = _formatter.Execute(record);

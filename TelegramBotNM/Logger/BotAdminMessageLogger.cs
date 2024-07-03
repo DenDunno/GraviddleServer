@@ -16,6 +16,6 @@ public class BotAdminMessageLogger : IMessageLogger
 
     public async Task Log(string text)
     {
-        await _bridge.Send(text, _admins.Execute());
+        await _bridge.SendText(text, _admins.Execute());
     }
 }

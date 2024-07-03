@@ -3,19 +3,16 @@ using TelegramBotNM.Bot;
 
 namespace TelegramBotNM.Notification;
 
-public class TelegramBotNotification : INotification<string>
+public abstract class TelegramBotNotification<TInput> : INotification<TInput>
 {
-    private readonly TelegramBotBridge _bridge;
-    private readonly ParseMode? _parseMode;
-    
-    public TelegramBotNotification(TelegramBotBridge bridge, ParseMode? parseMode = null)
+    protected readonly TelegramBotBridge Bridge;
+    protected readonly ParseMode? ParseMode;
+
+    protected TelegramBotNotification(TelegramBotBridge bridge, ParseMode? parseMode)
     {
-        _parseMode = parseMode;
-        _bridge = bridge;
+        ParseMode = parseMode;
+        Bridge = bridge;
     }
 
-    public async Task Notify(string record)
-    {
-        await _bridge.SendToAll(record, _parseMode);
-    }
+    public abstract Task Notify(TInput data);
 }

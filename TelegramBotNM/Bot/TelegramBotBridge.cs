@@ -1,3 +1,4 @@
+using GraviddleServer.Code.API;
 using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
@@ -17,32 +18,50 @@ public class TelegramBotBridge
         _userRecordsDump = userRecordsDump;
         _client = client;
     }
-    
-    public async Task Send(ITelegramMessage message, long chatId, CancellationToken token = default)
+
+    public async Task SendText(ITelegramMessage message, long chatId, CancellationToken token = default)
     {
-        await Send(await message.GetText(), chatId, message.Mode, token);
+        await SendText(await message.GetText(), chatId, message.Mode, token);
     }
 
-    private async Task Send(string text, long chatId, ParseMode? mode = null, CancellationToken token = default)
+    private async Task SendText(string text, long chatId, ParseMode? mode = null, CancellationToken token = default)
     {
-        await _client.SendTextMessageAsync(chatId, text, parseMode:mode, cancellationToken: token);
+        await _client.SendTextMessageAsync(chatId, text, parseMode: mode, cancellationToken: token);
     }
-    
-    public async Task Send(string text, IEnumerable<long> chats, ParseMode? mode = null, CancellationToken token = default)
+
+    public async Task SendText(string text, IEnumerable<long> chats, ParseMode? mode = null,
+        CancellationToken token = default)
     {
-        IEnumerable<Task> tasks = chats.Select(chatId => Send(text, chatId, mode, token));
+        IEnumerable<Task> tasks = chats.Select(chatId => SendText(text, chatId, mode, token));
         await Task.WhenAll(tasks);
     }
-    
-    public async Task SendToAll(string text, ParseMode? mode = null, CancellationToken token = default)
+
+    public async Task SendTextToAll(string text, ParseMode? mode = null, CancellationToken token = default)
     {
-        IEnumerable<long> users = _userRecordsDump.Execute().Select(user => user.Id);
-        await Send(text, users, mode, token);
+        await SendText(text, GetAllUsers(), mode, token);
+    }
+
+    public async Task SendImage(long chatId, ImageMessageData data, ParseMode? parseMode = null)
+    {
+        using MemoryStream memoryStream = new(data.Image);
+        InputFileStream imageStream = new(memoryStream, "image.png");
+        await _client.SendPhotoAsync(chatId, imageStream, caption: data.Message, parseMode: parseMode);
+    }
+
+    public async Task SendImageMessageToAll(ImageMessageData data, ParseMode? parseMode = null)
+    {
+        IEnumerable<Task> tasks = GetAllUsers().Select(chatId => SendImage(chatId, data, parseMode));
+        await Task.WhenAll(tasks);
     }
 
     public async Task<Chat[]> GetChats(IEnumerable<long> chatIds)
     {
         IEnumerable<Task<Chat>> tasks = chatIds.Select(id => _client.GetChatAsync(id));
         return await Task.WhenAll(tasks);
+    }
+
+    private IEnumerable<long> GetAllUsers()
+    {
+        return _userRecordsDump.Execute().Select(user => user.Id);
     }
 }

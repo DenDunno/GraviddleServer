@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using TelegramBotNM.Notification;
 using TelegramBotNM.Repository.Commands.Contract;
 
@@ -30,8 +31,7 @@ public class Endpoints
     public string GetAllRecords()
     {
         IList<LevelRecord> dump = _recordsDump.Execute();
-
-        return dump.Any() ? dump.Select(x => x.ToString()).Aggregate((s, s1) => s + '\n' + s1) : "No records";
+        return JsonConvert.SerializeObject(dump);
     }
 
     [HttpPost]

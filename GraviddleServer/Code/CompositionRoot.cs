@@ -2,8 +2,8 @@ using GraviddleServer.Code.API;
 using GraviddleServer.Code.Bot;
 using GraviddleServer.Code.Formatter;
 using GraviddleServer.Code.Repository;
+using Telegram.Bot.Types.Enums;
 using TelegramBotNM.Bot;
-using TelegramBotNM.Logger;
 using TelegramBotNM.Notification;
 
 namespace GraviddleServer.Code;
@@ -22,22 +22,24 @@ public static class CompositionRoot
         return telegramBotFactory.Create();
     }
 
-    public static WebApplication CreateWebApplication(INotification<string> notification, IMessageLogger logger, AnalyticsRepository repository)
+    public static WebApplication CreateWebApplication(TelegramBot bot, AnalyticsRepository repository)
     {
+        TelegramBotTextNotification textNotification = new(bot.Bridge, ParseMode.Html);
+        TelegramBotImageNotification imageNotification = new(bot.Bridge, ParseMode.Html);
+        
         WebApplication app = WebApplication.Create();
         Endpoints endpoints = new(
             repository.Add,
             repository.Dump,
-            new FormattedStringNotification<LevelRecord>(notification, new LevelRecordFormatter()),
-            new FormattedStringNotification<DeathRecord>(notification, new DeathRecordFormatter()));
+            new FormattedStringNotification<LevelRecord>(textNotification, new LevelRecordFormatter()),
+            new DeathRecordNotification(imageNotification, new DeathRecordFormatter()));
 
-        app.UseMiddleware<ExceptionMiddleware>(logger);
+        app.UseMiddleware<ExceptionMiddleware>(bot.Logger);
         app.MapGet("/", endpoints.Greet);
         app.MapGet("/all", endpoints.GetAllRecords);
         app.MapPost("/postLevelRecord", endpoints.PostLevelRecord);
         app.MapPost("/postDeathRecord", endpoints.PostDeathRecord);
         
-
         return app;
     }
 }
