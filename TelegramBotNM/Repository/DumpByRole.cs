@@ -14,7 +14,7 @@ public class DumpByRole : IRecordsDump<long>
         _role = role;
     }
 
-    public IList<long> Execute()
+    public List<long> Execute()
     {
         return _usersDump.Execute()
             .Where(user => user.Role == _role)

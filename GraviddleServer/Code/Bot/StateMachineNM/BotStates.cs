@@ -24,6 +24,7 @@ public class BotStates
     public readonly IState CommandsListener;
     public readonly IState TelegramUsersDump;
     public readonly IState YouAreAlreadyAdmin;
+    public readonly IState GenerateLevelStatistics;
     public readonly IReadOnlyList<IState> All;
 
     public BotStates(TelegramUser user, Repositories repositories, TelegramBotBridge bridge)
@@ -45,6 +46,9 @@ public class BotStates
             RecordsDump = new MessageState(bridge, user.Id, new RecordsDumpMessage(repositories.Analytics.Dump)),
             TelegramUsersDump = new MessageState(bridge, user.Id,
                 new TelegramUsersDumpMessage(repositories.TelegramUsers.Dump, bridge)),
+            GenerateLevelStatistics = new GenerateStatisticsState(bridge, user,
+                    new ChartRequest(
+                        new AverageLevelsStatisticsQuery(repositories.Analytics.Dump, "Time", record => record.Time))),
         };
     }
 }

@@ -14,6 +14,6 @@ public class LevelRecordFormatter : IFormatter<LevelRecord>
         table.Add("Time", record.Time);
         table.Add("DeathCount", record.DeathCount);
 
-        return table.Build();
+        return "<b>A player finished a level:</b>\n\n" + table.Build();
     }
 }

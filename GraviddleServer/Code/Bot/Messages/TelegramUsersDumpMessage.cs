@@ -23,13 +23,13 @@ public class TelegramUsersDumpMessage : ITelegramMessage
     
     public async Task<string> GetText()
     {
-        Table table = new("Num", "Name", "Role", "Chat id");
+        Table table = new("Num", "Name", "Role", "State id", "Chat id");
         IList<TelegramUser> users = _userRecordsDump.Execute();
         Chat[] chats = await _bridge.GetChats(users.Select(user => user.Id));
 
         for (int i = 0; i < users.Count; ++i)
         {
-            table.Add(i + 1, chats[i].GetFullName(), users[i].Role, users[i].Id);
+            table.Add(i + 1, chats[i].GetFullName(), users[i].Role, users[i].ConversationState, users[i].Id);
         }
         
         return table.Build();

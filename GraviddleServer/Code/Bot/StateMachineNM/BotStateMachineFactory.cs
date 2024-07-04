@@ -46,8 +46,9 @@ public class BotStateMachineFactory : IStateMachineFactory
         transitions.Add(states.Admin, states.YouAreAlreadyAdmin, conditions.Authorize);
         transitions.Add(states.Admin, states.TelegramUsersDump, conditions.TelegramUsersDump);
         transitions.Add(states.Admin, states.RecordsDump, conditions.RecordsDump);
+        transitions.Add(states.Admin, states.GenerateLevelStatistics, conditions.GenerateLevelStatistics);
         transitions.Add(states.CommandsListener, states.User, conditions.IsUser);
-        transitions.Add(states.User, states.YouAreNotAdmin, conditions.RestrictedCommand);
+        transitions.Add(states.User, states.YouAreNotAdmin, conditions.AdminCommand);
         transitions.Add(states.User, states.EnterPassword, conditions.Authorize);
         transitions.Add(states.EnterPassword, states.Authorization, new True());
         transitions.Add(states.Authorization, states.SetAdminRole, conditions.ValidAdminPassword);

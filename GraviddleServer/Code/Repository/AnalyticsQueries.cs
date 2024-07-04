@@ -11,10 +11,11 @@ public class AnalyticsQueries
         string escapedLevel = element.Level.Replace("'", "''");
 
         return
-            $@"INSERT INTO Analytics (DeviceId, Name, Stars, Level, Time, DeathCount) VALUES ('{element.Id}', 
+            $@"INSERT INTO Analytics (DeviceId, Name, Stars, Level, LevelIndex, Time, DeathCount) VALUES ('{element.Id}', 
                                                                                           '{escapedName}',
                                                                                           {element.Stars},
                                                                                           '{escapedLevel}', 
+                                                                                          {element.LevelIndex}, 
                                                                                           {element.Time.ToString(CultureInfo.InvariantCulture)}, 
                                                                                           {element.DeathCount});";
     }

@@ -24,7 +24,7 @@ public class TelegramBotBridge
         await SendText(await message.GetText(), chatId, message.Mode, token);
     }
 
-    private async Task SendText(string text, long chatId, ParseMode? mode = null, CancellationToken token = default)
+    public async Task SendText(string text, long chatId, ParseMode? mode = null, CancellationToken token = default)
     {
         await _client.SendTextMessageAsync(chatId, text, parseMode: mode, cancellationToken: token);
     }
@@ -41,16 +41,16 @@ public class TelegramBotBridge
         await SendText(text, GetAllUsers(), mode, token);
     }
 
-    public async Task SendImage(long chatId, ImageMessageData data, ParseMode? parseMode = null)
+    public async Task SendPNG(long chatId, ImageMessageData data, ParseMode? parseMode = null)
     {
         using MemoryStream memoryStream = new(data.Image);
         InputFileStream imageStream = new(memoryStream, "image.png");
         await _client.SendPhotoAsync(chatId, imageStream, caption: data.Message, parseMode: parseMode);
     }
 
-    public async Task SendImageMessageToAll(ImageMessageData data, ParseMode? parseMode = null)
+    public async Task SendPNGToAll(ImageMessageData data, ParseMode? parseMode = null)
     {
-        IEnumerable<Task> tasks = GetAllUsers().Select(chatId => SendImage(chatId, data, parseMode));
+        IEnumerable<Task> tasks = GetAllUsers().Select(chatId => SendPNG(chatId, data, parseMode));
         await Task.WhenAll(tasks);
     }
 

@@ -12,6 +12,6 @@ public class TelegramBotImageNotification : TelegramBotNotification<ImageMessage
 
     public override async Task Notify(ImageMessageData data)
     {
-        await Bridge.SendImageMessageToAll(data, ParseMode);
+        await Bridge.SendPNGToAll(data, ParseMode);
     }
 }

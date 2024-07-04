@@ -4,7 +4,7 @@ public class Any : ICondition
 {
     private readonly IList<ICondition> _conditions;
 
-    public Any(params ICondition[] conditions)
+    public Any(ICondition[] conditions)
     {
         _conditions = conditions;
     }
