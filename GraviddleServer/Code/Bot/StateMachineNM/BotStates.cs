@@ -1,5 +1,6 @@
 using GraviddleServer.Code.Bot.Messages;
 using GraviddleServer.Code.Bot.StateMachineNM.States;
+using GraviddleServer.Code.Bot.StateMachineNM.States.StatisticsGeneration;
 using GraviddleServer.Code.Repository;
 using TelegramBotNM.Bot;
 using TelegramBotNM.StateMachineNM.State;
@@ -47,8 +48,7 @@ public class BotStates
             TelegramUsersDump = new MessageState(bridge, user.Id,
                 new TelegramUsersDumpMessage(repositories.TelegramUsers.Dump, bridge)),
             GenerateLevelStatistics = new GenerateStatisticsState(bridge, user,
-                    new ChartRequest(
-                        new AverageLevelsStatisticsQuery(repositories.Analytics.Dump, "Time", record => record.Time))),
+                new QuickChartStatisticsGeneration(repositories.Analytics.Dump)),
         };
     }
 }

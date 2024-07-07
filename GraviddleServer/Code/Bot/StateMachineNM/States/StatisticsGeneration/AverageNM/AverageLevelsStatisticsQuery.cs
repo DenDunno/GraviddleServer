@@ -8,12 +8,14 @@ public class AverageLevelsStatisticsQuery : IConfigProvider
     private readonly IRecordsDump<LevelRecord> _recordsDump;
     private readonly Func<LevelRecord, double> _observation;
     private readonly string _statisticsName;
+    private readonly string _color;
 
-    public AverageLevelsStatisticsQuery(IRecordsDump<LevelRecord> recordsDump, string statisticsName, Func<LevelRecord, double> observation)
+    public AverageLevelsStatisticsQuery(IRecordsDump<LevelRecord> recordsDump, string statisticsName, string color, Func<LevelRecord, double> observation)
     {
         _statisticsName = statisticsName;
         _recordsDump = recordsDump;
         _observation = observation;
+        _color = color;
     }
 
     public ChartConfig GetConfig()
@@ -70,8 +72,8 @@ public class AverageLevelsStatisticsQuery : IConfigProvider
                     {
                         Data = data,
                         Fill = false,
-                        BorderColor = "green",
-                        BackgroundColor = "green",
+                        BorderColor = _color,
+                        BackgroundColor = _color,
                         Label = $"{_statisticsName} per level",
                     }
                 }

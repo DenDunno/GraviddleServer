@@ -16,11 +16,11 @@ public class ChartRequest : IPNGProvider
         _width = width;
     }
     
-    public byte[] Evaluate()
+    public async Task<byte[]> Evaluate()
     {
         ChartConfig config = _configProvider.GetConfig();
         
-        return new Chart()
+        return await new ChartWrapper()
         {
             Width = _width,
             Height = _height,

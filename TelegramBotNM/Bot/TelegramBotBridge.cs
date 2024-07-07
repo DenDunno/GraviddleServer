@@ -5,6 +5,7 @@ using Telegram.Bot.Types.Enums;
 using TelegramBotNM.Repository.Commands.Contract;
 using TelegramBotNM.StateMachineNM.State.MessageState;
 using TelegramBotNM.User;
+using TelegramBotNM.Utils;
 
 namespace TelegramBotNM.Bot;
 
@@ -46,6 +47,21 @@ public class TelegramBotBridge
         using MemoryStream memoryStream = new(data.Image);
         InputFileStream imageStream = new(memoryStream, "image.png");
         await _client.SendPhotoAsync(chatId, imageStream, caption: data.Message, parseMode: parseMode);
+    }
+    
+    public async Task SendPNGAlbum(long chatId, byte[][] images)
+    {
+        List<InputMediaPhoto> album = new();
+        List<MemoryStream> memoryStreams = new();
+        images.ForEach(image => memoryStreams.Add(new MemoryStream(image)));
+        
+        for (int i = 0; i < images.Length; ++i)
+        {
+            album.Add(new InputMediaPhoto(new InputFileStream(memoryStreams[i], $"image{i}.png")));
+        }
+
+        await _client.SendMediaGroupAsync(chatId, album);
+        memoryStreams.ForEach(memoryStream => memoryStream.Dispose());
     }
 
     public async Task SendPNGToAll(ImageMessageData data, ParseMode? parseMode = null)
