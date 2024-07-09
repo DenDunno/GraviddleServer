@@ -1,7 +1,8 @@
-using GraviddleServer.Code.API;
+using GraviddleServer.Code.Bot.StateMachineNM.StatesNM.StatisticsGeneration.Data;
+using GraviddleServer.Code.Repository.Records;
 using TelegramBotNM.Repository.Commands.Contract;
 
-namespace GraviddleServer.Code.Bot.StateMachineNM.States;
+namespace GraviddleServer.Code.Bot.StateMachineNM.StatesNM.StatisticsGeneration.AverageNM;
 
 public class AverageLevelsStatisticsQuery : IConfigProvider
 {

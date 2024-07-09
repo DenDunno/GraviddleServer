@@ -2,6 +2,7 @@ using GraviddleServer.Code.API;
 using GraviddleServer.Code.Bot;
 using GraviddleServer.Code.Formatter;
 using GraviddleServer.Code.Repository;
+using GraviddleServer.Code.Repository.Records;
 using Telegram.Bot.Types.Enums;
 using TelegramBotNM.Bot;
 using TelegramBotNM.Notification;

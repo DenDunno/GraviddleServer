@@ -1,7 +1,7 @@
 using System.Text;
 using System.Text.Json;
 
-namespace QuickChart
+namespace GraviddleServer.Code.Bot.StateMachineNM.StatesNM.StatisticsGeneration
 {
   public class ChartWrapper
   {

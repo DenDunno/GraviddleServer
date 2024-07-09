@@ -1,5 +1,6 @@
 using GraviddleServer.Code.API;
 using GraviddleServer.Code.Bot.Messages;
+using GraviddleServer.Code.Repository.Records;
 using TelegramBotNM.Notification;
 using TelegramBotNM.Utils;
 

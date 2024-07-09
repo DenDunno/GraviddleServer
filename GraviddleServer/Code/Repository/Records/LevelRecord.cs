@@ -1,6 +1,6 @@
 using TelegramBotNM.Repository;
 
-namespace GraviddleServer.Code.API;
+namespace GraviddleServer.Code.Repository.Records;
 
 [Serializable]
 public record LevelRecord(string Id, string Name, int Stars, 

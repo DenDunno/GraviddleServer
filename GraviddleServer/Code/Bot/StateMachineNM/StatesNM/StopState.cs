@@ -2,7 +2,7 @@ using TelegramBotNM.Bot;
 using TelegramBotNM.Repository.Commands.Contract;
 using TelegramBotNM.StateMachineNM.State.MessageState;
 
-namespace GraviddleServer.Code.Bot.StateMachineNM.States;
+namespace GraviddleServer.Code.Bot.StateMachineNM.StatesNM;
 
 public class StopState : MessageState
 {

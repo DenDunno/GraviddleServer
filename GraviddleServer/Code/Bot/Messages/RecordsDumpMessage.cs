@@ -1,4 +1,5 @@
 using GraviddleServer.Code.API;
+using GraviddleServer.Code.Repository.Records;
 using Telegram.Bot.Types.Enums;
 using TelegramBotNM.Repository.Commands.Contract;
 using TelegramBotNM.StateMachineNM.State.MessageState;

@@ -1,9 +1,9 @@
-using GraviddleServer.Code.API;
+using GraviddleServer.Code.Bot.StateMachineNM.StatesNM.StatisticsGeneration;
 using TelegramBotNM.Bot;
 using TelegramBotNM.StateMachineNM.State;
 using TelegramBotNM.User;
 
-namespace GraviddleServer.Code.Bot.StateMachineNM.States;
+namespace GraviddleServer.Code.Bot.StateMachineNM.StatesNM;
 
 public class GenerateStatisticsState : BaseState
 {

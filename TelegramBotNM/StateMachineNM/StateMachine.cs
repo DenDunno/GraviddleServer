@@ -19,14 +19,15 @@ public class StateMachine
     public async Task<ConversationResult> UpdateConversation(CancellationToken token)
     {
         bool continueTraversing;
-
+        IState initialState = _state;
+        
         do
         {
             continueTraversing = await TryTransit(token);
             
         } while (_state.IsPassive && continueTraversing);
 
-        return new ConversationResult(_state.IsPassive == false, _stateIdCalculator.StateToId(_state));
+        return new ConversationResult(initialState != _state, _stateIdCalculator.StateToId(_state));
     }
 
     private async Task<bool> TryTransit(CancellationToken token)

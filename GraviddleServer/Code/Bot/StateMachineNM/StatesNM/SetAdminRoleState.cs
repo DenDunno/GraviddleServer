@@ -3,14 +3,15 @@ using TelegramBotNM.Repository.Commands.Contract;
 using TelegramBotNM.StateMachineNM.State.MessageState;
 using TelegramBotNM.User;
 
-namespace GraviddleServer.Code.Bot.StateMachineNM.States;
+namespace GraviddleServer.Code.Bot.StateMachineNM.StatesNM;
 
 public class SetAdminRoleState : MessageState
 {
     private readonly IRecordUpdate<TelegramUser> _userUpdate;
     private readonly TelegramUser _user;
 
-    public SetAdminRoleState(TelegramUser user, TelegramBotBridge bridge, IRecordUpdate<TelegramUser> userUpdate) : base(bridge, user.Id, "Congrats, you are admin now")
+    public SetAdminRoleState(TelegramUser user, TelegramBotBridge bridge, IRecordUpdate<TelegramUser> userUpdate) :
+        base(bridge, user.Id, "Congrats, you are admin now")
     {
         _userUpdate = userUpdate;
         _user = user;
@@ -19,7 +20,7 @@ public class SetAdminRoleState : MessageState
     protected override async Task OnEnter(CancellationToken token)
     {
         _userUpdate.Execute(_user with { Role = Role.Admin });
-        
+
         await base.OnEnter(token);
     }
 }

@@ -7,13 +7,13 @@ public abstract class BaseState : IState
     {
     }
 
-    protected BaseState(string name)
+    protected BaseState(string debugName)
     {
-        Name = name;
+        DebugName = debugName;
     }
 
-    public string Name { get; }
-    public virtual bool IsPassive => true;
+    public string DebugName { get; }
+    public bool IsPassive { get; protected init; } = true;
 
     public async Task Enter(CancellationToken token)
     {

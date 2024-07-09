@@ -2,7 +2,8 @@ namespace TelegramBotNM.StateMachineNM.State;
 
 public class EmptyState : BaseState
 {
-    public EmptyState(string name) : base(name)
+    public EmptyState(string debugName, bool isPassive = true) : base(debugName)
     {
+        IsPassive = isPassive;
     }
 }

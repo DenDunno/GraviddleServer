@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace GraviddleServer.Code.Bot.StateMachineNM.States;
+namespace GraviddleServer.Code.Bot.StateMachineNM.StatesNM.StatisticsGeneration.Data;
 
 public class ChartData
 {

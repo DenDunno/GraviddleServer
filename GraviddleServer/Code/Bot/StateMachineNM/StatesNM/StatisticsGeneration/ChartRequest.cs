@@ -1,7 +1,7 @@
+using GraviddleServer.Code.Bot.StateMachineNM.StatesNM.StatisticsGeneration.Data;
 using Newtonsoft.Json;
-using QuickChart;
 
-namespace GraviddleServer.Code.Bot.StateMachineNM.States;
+namespace GraviddleServer.Code.Bot.StateMachineNM.StatesNM.StatisticsGeneration;
 
 public class ChartRequest : IPNGProvider
 {

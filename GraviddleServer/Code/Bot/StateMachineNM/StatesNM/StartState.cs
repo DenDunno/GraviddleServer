@@ -3,7 +3,7 @@ using TelegramBotNM.Repository.Commands.Contract;
 using TelegramBotNM.StateMachineNM.State.MessageState;
 using TelegramBotNM.User;
 
-namespace GraviddleServer.Code.Bot.StateMachineNM.States;
+namespace GraviddleServer.Code.Bot.StateMachineNM.StatesNM;
 
 public class StartState : MessageState
 {

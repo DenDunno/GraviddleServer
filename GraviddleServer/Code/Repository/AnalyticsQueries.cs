@@ -1,5 +1,6 @@
 using System.Globalization;
 using GraviddleServer.Code.API;
+using GraviddleServer.Code.Repository.Records;
 
 namespace GraviddleServer.Code.Repository;
 
@@ -23,5 +24,10 @@ public class AnalyticsQueries
     public string GetAll()
     {
         return $@"SELECT * FROM Analytics;";
+    }
+
+    public string Contains(string userId)
+    {
+        return $@"SELECT COUNT(*) FROM Analytics WHERE DeviceId='{userId}';";
     }
 }
