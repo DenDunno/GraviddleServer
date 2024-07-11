@@ -23,7 +23,7 @@ public class AverageLevelsStatisticsQuery : IConfigProvider
     {
         List<LevelRecord> records = _recordsDump.Execute();
         Dictionary<int, string> levelNamesMap = GetLevelNamesMap(records);
-        KeyValuePair<int, Average>[] averageTimePerLevel = GetAverageTimePerLevel(records);
+        KeyValuePair<int, Average>[] averageTimePerLevel = GetAveragePerLevel(records);
 
         string[] labels = averageTimePerLevel.Select(x => levelNamesMap[x.Key]).ToArray();
         double[] data = averageTimePerLevel.Select(x => x.Value.Value).ToArray();
@@ -31,7 +31,7 @@ public class AverageLevelsStatisticsQuery : IConfigProvider
         return BuildConfig(labels, data);
     }
 
-    private KeyValuePair<int, Average>[] GetAverageTimePerLevel(List<LevelRecord> records)
+    private KeyValuePair<int, Average>[] GetAveragePerLevel(List<LevelRecord> records)
     {
         Dictionary<int, Average> averageTime = new();
         
