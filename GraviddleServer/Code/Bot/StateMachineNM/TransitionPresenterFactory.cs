@@ -32,6 +32,7 @@ public class TransitionPresenterFactory
         transitions.Add(states.Admin, states.Messages.YouAreAlreadyAdmin, conditions.Authorize);
         transitions.Add(states.Admin, states.Messages.TelegramUsersDump, conditions.TelegramUsersDump);
         transitions.Add(states.Admin, states.Messages.RecordsDump, conditions.RecordsDump);
+        transitions.Add(states.Admin, states.Messages.GameUsersDump, conditions.GameUsersDump);
         transitions.Add(states.Admin, states.GenerateAverageStatistics, conditions.GenerateAverageStatistics);
         transitions.Add(states.Admin, states.Messages.EnterUserId, conditions.GenerateStatisticsByPlayer);
         transitions.Add(states.Messages.EnterUserId, states.PlayerIdInput, new True());

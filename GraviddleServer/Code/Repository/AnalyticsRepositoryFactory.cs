@@ -1,4 +1,3 @@
-using GraviddleServer.Code.API;
 using GraviddleServer.Code.Parser;
 using GraviddleServer.Code.Repository.Records;
 using TelegramBotNM.Repository;
@@ -26,7 +25,9 @@ public class AnalyticsRepositoryFactory : IFactory<AnalyticsRepository>
         {
             Add = new RecordCommand<LevelRecord, string>(_bridge, new QueryBuilder<LevelRecord>(queries.Insert)),
             Dump = new RecordsDumpCommand<LevelRecord>(_bridge, parser, new QueryProvider(queries.GetAll())),
-            Contains = new RecordСontainsCommand<string>(_bridge, new QueryBuilder<string>(queries.Contains))
+            Contains = new RecordСontainsCommand<string>(_bridge, new QueryBuilder<string>(queries.Contains)),
+            GameUsersDump = new RecordsDumpCommand<LevelRecord>(_bridge, parser, new QueryProvider(queries.GetUsers())),
+            Fetch = new RecordFetchCommand<LevelRecord, string>(_bridge, parser, new QueryBuilder<string>(queries.Fetch))
         };
     }
 }

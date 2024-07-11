@@ -1,6 +1,6 @@
 using ConsoleTables;
 
-namespace GraviddleServer.Code.Bot.Messages;
+namespace GraviddleServer.Code.Bot.Messages.TableMessages;
 
 public class Table
 {

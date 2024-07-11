@@ -1,4 +1,4 @@
-namespace GraviddleServer.Code.API;
+namespace TelegramBotNM.Notification;
 
 public class ImageMessageData
 {

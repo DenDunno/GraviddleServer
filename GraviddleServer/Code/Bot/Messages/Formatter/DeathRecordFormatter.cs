@@ -1,10 +1,9 @@
-using GraviddleServer.Code.API;
-using GraviddleServer.Code.Bot.Messages;
+using GraviddleServer.Code.Bot.Messages.TableMessages;
 using GraviddleServer.Code.Repository.Records;
 using TelegramBotNM.Notification;
 using TelegramBotNM.Utils;
 
-namespace GraviddleServer.Code.Formatter;
+namespace GraviddleServer.Code.Bot.Messages.Formatter;
 
 public class DeathRecordFormatter : IFormatter<DeathRecord>
 {

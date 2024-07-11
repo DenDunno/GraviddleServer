@@ -6,14 +6,15 @@ namespace GraviddleServer.Code.Bot.StateMachineNM.ConditionsNM;
 
 public class Conditions
 {
+    public readonly ICondition Stop;
+    public readonly ICondition Start;
     public readonly ICondition IsUser;
     public readonly ICondition IsAdmin;
-    public readonly ICondition Start;
-    public readonly ICondition Stop;
     public readonly ICondition Authorize;
     public readonly ICondition RecordsDump;
     public readonly ICondition AdminCommand;
     public readonly ICondition ValidPlayerId;
+    public readonly ICondition GameUsersDump;
     public readonly ICondition AnyCommandEntered;
     public readonly ICondition TelegramUsersDump;
     public readonly ICondition ValidAdminPassword;
@@ -33,10 +34,11 @@ public class Conditions
             Authorize = new IsEqual<string>(userInput, "/authorize"),
             AdminCommand = new Any(new[]
             {
+                RecordsDump = new IsEqual<string>(userInput, "/records_dump"),
+                GameUsersDump = new IsEqual<string>(userInput, "/game_users_dump"),
                 TelegramUsersDump = new IsEqual<string>(userInput, "/telegram_users_dump"), 
-                RecordsDump = new IsEqual<string>(userInput, "/records_dump"), 
-                GenerateAverageStatistics = new IsEqual<string>(userInput, "/generate_statistics"), 
-                GenerateStatisticsByPlayer = new IsEqual<string>(userInput, "/generate_statistics_by_player"), 
+                GenerateAverageStatistics = new IsEqual<string>(userInput, "/generate_statistics"),
+                GenerateStatisticsByPlayer = new IsEqual<string>(userInput, "/generate_statistics_by_player"),
             })
         });
     }

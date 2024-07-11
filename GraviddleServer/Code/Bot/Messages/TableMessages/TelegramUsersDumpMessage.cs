@@ -1,14 +1,12 @@
 using Telegram.Bot.Types;
-using Telegram.Bot.Types.Enums;
 using TelegramBotNM.Bot;
 using TelegramBotNM.Repository.Commands.Contract;
-using TelegramBotNM.StateMachineNM.State.MessageState;
 using TelegramBotNM.User;
 using TelegramBotNM.Utils;
 
-namespace GraviddleServer.Code.Bot.Messages;
+namespace GraviddleServer.Code.Bot.Messages.TableMessages;
 
-public class TelegramUsersDumpMessage : ITelegramMessage
+public class TelegramUsersDumpMessage : TableMessage
 {
     private readonly IRecordsDump<TelegramUser> _userRecordsDump;
     private readonly TelegramBotBridge _bridge;
@@ -19,19 +17,17 @@ public class TelegramUsersDumpMessage : ITelegramMessage
         _bridge = bridge;
     }
 
-    public ParseMode? Mode => ParseMode.Html;
-    
-    public async Task<string> GetText()
+    protected override string[] Columns => new[] { "Num", "Name", "Role", "State id", "Chat id" };
+
+    protected override async Task WriteRaws(List<object[]> raws)
     {
-        Table table = new("Num", "Name", "Role", "State id", "Chat id");
         IList<TelegramUser> users = _userRecordsDump.Execute();
         Chat[] chats = await _bridge.GetChats(users.Select(user => user.Id));
 
         for (int i = 0; i < users.Count; ++i)
         {
-            table.Add(i + 1, chats[i].GetFullName(), users[i].Role, users[i].ConversationState, users[i].Id);
+            raws.Add(new object[]
+                { i + 1, chats[i].GetFullName(), users[i].Role, users[i].ConversationState, users[i].Id });
         }
-        
-        return table.Build();
     }
 }

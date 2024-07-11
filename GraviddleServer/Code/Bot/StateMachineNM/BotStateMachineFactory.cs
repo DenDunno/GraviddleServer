@@ -24,7 +24,7 @@ public class BotStateMachineFactory : IStateMachineFactory
     public StateMachine Create(string userInput, TelegramUser user)
     {
         Conditions conditions = new(user, userInput, _adminPassword, _repositories);
-        BotStates states = new(user, _repositories, _botBridge);
+        BotStates states = new(user, userInput, _repositories, _botBridge);
         TransitionPresenterFactory transitionsPresenterFactory = new();
         TransitionsPresenter transitions = transitionsPresenterFactory.Create(states, conditions);
         StateIdCalculator stateIdCalculator = new(states.All);

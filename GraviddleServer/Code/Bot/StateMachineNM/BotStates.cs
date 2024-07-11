@@ -22,7 +22,7 @@ public class BotStates : States
     public readonly IState GenerateStatisticsByPlayer;
     public readonly MessageStates Messages;
 
-    public BotStates(TelegramUser user, Repositories repositories, TelegramBotBridge bridge)
+    public BotStates(TelegramUser user, string input, Repositories repositories, TelegramBotBridge bridge)
     {
         Add(Root = new EmptyState("Root", isPassive: false));
         Add(User = new EmptyState("User"));
@@ -35,8 +35,13 @@ public class BotStates : States
         Add(SetAdminRole = new SetAdminRoleState(user, bridge, repositories.TelegramUsers.UpdateRole));
         Add(Messages = new MessageStates(bridge, user.Id, repositories));
         Add(GenerateAverageStatistics = new GenerateStatisticsState(bridge, user,
-            new QuickChartStatisticsGeneration(repositories.Analytics.Dump)));
+            new QuickChartStatisticsGeneration(
+                new ConstantProvider<string>("Average"), 
+                repositories.Analytics.Dump)));
+
         Add(GenerateStatisticsByPlayer = new GenerateStatisticsState(bridge, user,
-            new QuickChartStatisticsGeneration(repositories.Analytics.Dump)));
+            new QuickChartStatisticsGeneration(
+                new NameByIdProvider(input, repositories.Analytics.Fetch),
+                new RecordsDumpById(input, repositories.Analytics.Dump))));
     }
 }
