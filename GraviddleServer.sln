@@ -2,7 +2,15 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraviddleServer", "GraviddleServer\GraviddleServer.csproj", "{A6CB4B46-D355-409B-9FB3-028759825EC1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelegramBotNM", "TelegramBotNM\TelegramBotNM.csproj", "{45DD5A2A-B25C-4E60-B3F9-ADC240642F18}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelegramBotTemplate", "TelegramBotTemplate\TelegramBotTemplate.csproj", "{45DD5A2A-B25C-4E60-B3F9-ADC240642F18}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AnalyticsTelegramBot", "AnalyticsTelegramBot\AnalyticsTelegramBot.csproj", "{63634659-DC80-48D7-8AAE-770613F94852}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{486B564D-F786-4D5D-AAA0-D8D7E52BB23C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{2B3F9465-CE33-470C-976A-06355C7C8A48}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompositionRoot", "CompositionRoot\CompositionRoot.csproj", "{8E9E4CB4-ECF6-4A53-9B9B-ED6072F13902}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +26,21 @@ Global
 		{45DD5A2A-B25C-4E60-B3F9-ADC240642F18}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45DD5A2A-B25C-4E60-B3F9-ADC240642F18}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45DD5A2A-B25C-4E60-B3F9-ADC240642F18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{63634659-DC80-48D7-8AAE-770613F94852}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63634659-DC80-48D7-8AAE-770613F94852}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63634659-DC80-48D7-8AAE-770613F94852}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63634659-DC80-48D7-8AAE-770613F94852}.Release|Any CPU.Build.0 = Release|Any CPU
+		{486B564D-F786-4D5D-AAA0-D8D7E52BB23C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{486B564D-F786-4D5D-AAA0-D8D7E52BB23C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{486B564D-F786-4D5D-AAA0-D8D7E52BB23C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{486B564D-F786-4D5D-AAA0-D8D7E52BB23C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2B3F9465-CE33-470C-976A-06355C7C8A48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2B3F9465-CE33-470C-976A-06355C7C8A48}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2B3F9465-CE33-470C-976A-06355C7C8A48}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2B3F9465-CE33-470C-976A-06355C7C8A48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E9E4CB4-ECF6-4A53-9B9B-ED6072F13902}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E9E4CB4-ECF6-4A53-9B9B-ED6072F13902}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E9E4CB4-ECF6-4A53-9B9B-ED6072F13902}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E9E4CB4-ECF6-4A53-9B9B-ED6072F13902}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
