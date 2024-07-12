@@ -13,7 +13,7 @@ using TelegramBotTemplate.Notification;
 
 namespace CompositionRoot;
 
-public static class CompositionRoot
+public static class Composition
 {
     public static SecureData FetchSecureData()
     {

@@ -11,6 +11,6 @@ public class PlainText : ITelegramMessage
         _text = text;
     }
 
-    public ParseMode? Mode => null;
+    public ParseMode? Mode => ParseMode.Html;
     public Task<string> GetText() => Task.FromResult(_text);
 }

@@ -30,6 +30,11 @@ public class TelegramBotBridge
         await _client.SendTextMessageAsync(chatId, text, parseMode: mode, cancellationToken: token);
     }
 
+    public async Task Delete(long chatId, int messageId, CancellationToken token)
+    {
+        await _client.DeleteMessageAsync(chatId, messageId, cancellationToken: token);
+    }
+
     public async Task SendText(string text, IEnumerable<long> chats, ParseMode? mode = null,
         CancellationToken token = default)
     {

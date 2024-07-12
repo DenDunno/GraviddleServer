@@ -21,24 +21,24 @@ public class Conditions
     public readonly ICondition GenerateAverageStatistics;
     public readonly ICondition GenerateStatisticsByPlayer;
 
-    public Conditions(TelegramUser user, string userInput, string adminPassword, AnalyticsRepository analyticsRepository)
+    public Conditions(TelegramUser user, string input, string password, AnalyticsRepository repository)
     {
         IsAdmin = new IsEqual<Role>(user.Role, Role.Admin);
         IsUser = new Not(IsAdmin);
-        ValidAdminPassword = new IsEqual<string>(userInput, adminPassword);
-        ValidPlayerId = new ValidPlayerIdCondition(userInput, analyticsRepository.Contains);
+        ValidAdminPassword = new IsEqual<string>(input, password);
+        ValidPlayerId = new ValidPlayerIdCondition(input, repository.Contains);
         AnyCommandEntered = new Any(new[]
         {
-            Stop = new IsEqual<string>(userInput, "/stop"),
-            Start = new IsEqual<string>(userInput, "/start"),
-            Authorize = new IsEqual<string>(userInput, "/authorize"),
+            Stop = new IsEqual<string>(input, "/stop"),
+            Start = new IsEqual<string>(input, "/start"),
+            Authorize = new IsEqual<string>(input, "/authorize"),
             AdminCommand = new Any(new[]
             {
-                RecordsDump = new IsEqual<string>(userInput, "/records_dump"),
-                GameUsersDump = new IsEqual<string>(userInput, "/game_users_dump"),
-                TelegramUsersDump = new IsEqual<string>(userInput, "/telegram_users_dump"), 
-                GenerateAverageStatistics = new IsEqual<string>(userInput, "/generate_statistics"),
-                GenerateStatisticsByPlayer = new IsEqual<string>(userInput, "/generate_statistics_by_player"),
+                RecordsDump = new IsEqual<string>(input, "/records_dump"),
+                GameUsersDump = new IsEqual<string>(input, "/game_users_dump"),
+                TelegramUsersDump = new IsEqual<string>(input, "/telegram_users_dump"), 
+                GenerateAverageStatistics = new IsEqual<string>(input, "/generate_statistics"),
+                GenerateStatisticsByPlayer = new IsEqual<string>(input, "/generate_statistics_by_player"),
             })
         });
     }

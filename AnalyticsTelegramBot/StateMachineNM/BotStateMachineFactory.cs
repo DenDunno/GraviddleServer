@@ -1,4 +1,5 @@
 using AnalyticsTelegramBot.StateMachineNM.ConditionsNM;
+using Telegram.Bot.Types;
 using TelegramBotTemplate.Bot;
 using TelegramBotTemplate.StateMachineNM;
 using TelegramBotTemplate.StateMachineNM.State;
@@ -20,10 +21,10 @@ public class BotStateMachineFactory : IStateMachineFactory
         _botBridge = botBridge;
     }
 
-    public StateMachine Create(string userInput, TelegramUser user)
+    public StateMachine Create(Message input, TelegramUser user)
     {
-        Conditions conditions = new(user, userInput, _adminPassword, _repositories.Analytics);
-        BotStates states = new(user, userInput, _repositories, _botBridge);
+        Conditions conditions = new(user, input.Text!, _adminPassword, _repositories.Analytics);
+        BotStates states = new(user, input, _repositories, _botBridge);
         TransitionPresenterFactory transitionsPresenterFactory = new();
         TransitionsPresenter transitions = transitionsPresenterFactory.Create(states, conditions);
         StateIdCalculator stateIdCalculator = new(states.All);

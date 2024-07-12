@@ -1,14 +1,15 @@
 using Application;
 using Application.Repository;
+using CompositionRoot;
 using Domain.Repository;
 using Microsoft.AspNetCore.Builder;
 using TelegramBotTemplate.Bot;
 
-SecureData secureData = CompositionRoot.CompositionRoot.FetchSecureData();
+SecureData secureData = Composition.FetchSecureData();
 IDatabaseBridge bridge = new MsSqlDatabaseBridge(secureData.DatabaseConnectionString);
 AnalyticsRepository analyticsRepository = new AnalyticsRepositoryFactory(bridge).Create();
-TelegramBot bot = CompositionRoot.CompositionRoot.CreateTelegramBot(analyticsRepository, secureData, bridge);
-WebApplication app = CompositionRoot.CompositionRoot.CreateWebApplication(bot, analyticsRepository);
+TelegramBot bot = Composition.CreateTelegramBot(analyticsRepository, secureData, bridge);
+WebApplication app = Composition.CreateWebApplication(bot, analyticsRepository);
 
 bridge.Open();
 bot.Run();

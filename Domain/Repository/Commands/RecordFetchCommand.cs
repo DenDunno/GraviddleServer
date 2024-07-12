@@ -17,21 +17,10 @@ public class RecordFetchCommand<TRecord, TKey> : RecordBaseCommand<TKey>, IRecor
 
     public bool TryExecute(TKey key, out TRecord record)
     {
-        IDataReader reader = null!;
-        bool result;
+        IDataReader reader = Bridge.ExecuteReader(GetQuery(key));
+        record = reader.Read() ? _parser.Parse(reader) : default!;
+        reader.Close();
         
-        try
-        {
-            reader = Bridge.ExecuteReader(GetQuery(key));
-            record = reader.Read() ? _parser.Parse(reader) : default!;
-            result = true;
-        }
-        finally
-        {
-            reader.Close();
-        }
-        
-        
-        return result;
+        return record != null;
     }
 }

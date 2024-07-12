@@ -2,6 +2,7 @@ using AnalyticsTelegramBot.Provider;
 using AnalyticsTelegramBot.StateMachineNM.StatesNM;
 using AnalyticsTelegramBot.StateMachineNM.StatesNM.StatisticsGeneration;
 using Application.Repository;
+using Telegram.Bot.Types;
 using TelegramBotTemplate.Bot;
 using TelegramBotTemplate.StateMachineNM.State;
 using TelegramBotTemplate.User;
@@ -23,7 +24,7 @@ public class BotStates : States
     public readonly IState GenerateStatisticsByPlayer;
     public readonly MessageStates Messages;
 
-    public BotStates(TelegramUser user, string input, Repositories repositories, TelegramBotBridge bridge)
+    public BotStates(TelegramUser user, Message input, Repositories repositories, TelegramBotBridge bridge)
     {
         Add(Root = new EmptyState("Root", isPassive: false));
         Add(User = new EmptyState("User"));
@@ -33,7 +34,7 @@ public class BotStates : States
         Add(Authorization = new EmptyState("Authorization", isPassive: false));
         Add(Start = new StartState(bridge, user, repositories.TelegramUsers.Add));
         Add(Stop = new StopState(bridge, user.Id, repositories.TelegramUsers.Remove));
-        Add(SetAdminRole = new SetAdminRoleState(user, bridge, repositories.TelegramUsers.UpdateRole));
+        Add(SetAdminRole = new SetAdminRoleState(input.MessageId, user, bridge, repositories.TelegramUsers.UpdateRole));
         Add(Messages = new MessageStates(bridge, user.Id, repositories));
         Add(GenerateAverageStatistics = new GenerateStatisticsState(bridge, user,
             new QuickChartStatisticsGeneration(
@@ -42,7 +43,7 @@ public class BotStates : States
 
         Add(GenerateStatisticsByPlayer = new GenerateStatisticsState(bridge, user,
             new QuickChartStatisticsGeneration(
-                new NameByIdProvider(input, repositories.Analytics.Fetch),
-                new RecordsDumpById(input, repositories.Analytics.Dump))));
+                new NameByIdProvider(input.Text!, repositories.Analytics.Fetch),
+                new RecordsDumpById(input.Text!, repositories.Analytics.Dump))));
     }
 }
