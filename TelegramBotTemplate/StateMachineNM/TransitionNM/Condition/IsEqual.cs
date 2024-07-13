@@ -11,8 +11,8 @@ public class IsEqual<T> : ICondition
         _input = input;
     }
 
-    public bool IsTrue()
+    public Task<bool> IsTrue()
     {
-        return EqualityComparer<T>.Default.Equals(_target , _input);
+        return Task.FromResult(EqualityComparer<T>.Default.Equals(_target , _input));
     }
 }

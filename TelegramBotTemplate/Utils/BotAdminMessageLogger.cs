@@ -6,17 +6,18 @@ namespace TelegramBotTemplate.Utils;
 
 public class BotAdminMessageLogger : IMessageLogger
 {
-    private readonly IRecordsDump<long> _admins;
+    private readonly IRecordsDump<long> _adminsDump;
     private readonly TelegramBotBridge _bridge;
 
-    public BotAdminMessageLogger(TelegramBotBridge bridge, IRecordsDump<long> admins)
+    public BotAdminMessageLogger(TelegramBotBridge bridge, IRecordsDump<long> adminsDump)
     {
         _bridge = bridge;
-        _admins = admins;
+        _adminsDump = adminsDump;
     }
 
     public async Task Log(string text)
     {
-        await _bridge.SendText(text, _admins.Execute());
+        List<long> admins = await _adminsDump.Execute();
+        await _bridge.SendText(text, admins);
     }
 }

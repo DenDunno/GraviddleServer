@@ -9,8 +9,8 @@ public class RecordRemoveCommand<TKey> : RecordBaseCommand<TKey>, IRecordRemove<
     {
     }
 
-    public void Execute(TKey key)
+    public async Task Execute(TKey key)
     {
-        Bridge.ExecuteNonQuery(GetQuery(key));
+        await Bridge.ExecuteNonQuery(GetQuery(key));
     }
 }

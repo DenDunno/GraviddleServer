@@ -21,7 +21,7 @@ public class TelegramUsersDumpMessage : TableMessage
 
     protected override async Task WriteRaws(List<object[]> raws)
     {
-        IList<TelegramUser> users = _userRecordsDump.Execute();
+        IList<TelegramUser> users = await _userRecordsDump.Execute();
         Chat[] chats = await _bridge.GetChats(users.Select(user => user.Id));
 
         for (int i = 0; i < users.Count; ++i)

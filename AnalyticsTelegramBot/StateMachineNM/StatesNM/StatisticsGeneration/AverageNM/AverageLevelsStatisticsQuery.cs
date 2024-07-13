@@ -19,9 +19,9 @@ public class AverageLevelsStatisticsQuery : IConfigProvider
         _color = color;
     }
 
-    public ChartConfig GetConfig()
+    public async Task<ChartConfig> GetConfig()
     {
-        List<LevelRecord> records = _recordsDump.Execute();
+        List<LevelRecord> records = await _recordsDump.Execute();
         Dictionary<int, string> levelNamesMap = GetLevelNamesMap(records);
         KeyValuePair<int, Average>[] averageTimePerLevel = GetAveragePerLevel(records);
 

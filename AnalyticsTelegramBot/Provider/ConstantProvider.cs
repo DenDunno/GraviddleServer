@@ -9,8 +9,8 @@ public class ConstantProvider<T> : IProvider<T>
         _constant = constant;
     }
 
-    public T Provide()
+    public Task<T> Provide()
     {
-        return _constant;
+        return Task.FromResult(_constant);
     }
 }

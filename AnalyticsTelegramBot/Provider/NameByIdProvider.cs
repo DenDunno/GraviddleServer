@@ -1,4 +1,5 @@
 using Application.Records;
+using Domain.Repository.Commands;
 using Domain.Repository.Commands.Contract;
 
 namespace AnalyticsTelegramBot.Provider;
@@ -14,13 +15,15 @@ public class NameByIdProvider : IProvider<string>
         _id = id;
     }
 
-    public string Provide()
+    public async Task<string> Provide()
     {
-        if (_nameFetch.TryExecute(_id, out LevelRecord record) == false)
+        FetchResult<LevelRecord> result = await _nameFetch.Execute(_id);
+
+        if (result.Success)
         {
-            throw new Exception($"No such record with id = {_id}");
-        };
-        
-        return record.Name;
+            return result.Record.Name;
+        }
+
+        throw new Exception($"No such record with id = {_id}");
     }
 }

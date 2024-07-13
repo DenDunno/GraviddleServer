@@ -32,7 +32,7 @@ public class StateMachine
 
     private async Task<bool> TryTransit(CancellationToken token)
     {
-        IState newState = _transitionsPresenter.Transit(_state);
+        IState newState = await _transitionsPresenter.Transit(_state);
         bool successfulTransition = newState != _state;
 
         if (successfulTransition)

@@ -9,8 +9,8 @@ public class Not : ICondition
         _condition = condition;
     }
 
-    public bool IsTrue()
+    public async Task<bool> IsTrue()
     {
-        return _condition.IsTrue() == false;
+        return await _condition.IsTrue() == false;
     }
 }

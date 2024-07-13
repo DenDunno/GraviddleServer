@@ -13,11 +13,11 @@ public class RecordSafeRemove<TKey> : IRecordRemove<TKey>
         _recordRemove = recordRemove;
     }
 
-    public void Execute(TKey key)
+    public async Task Execute(TKey key)
     {
-        if (_containsCommand.Execute(key))
+        if (await _containsCommand.Execute(key))
         {
-            _recordRemove.Execute(key);
+            await _recordRemove.Execute(key);
         }
     }
 }

@@ -44,7 +44,8 @@ public class TelegramBotBridge
 
     public async Task SendTextToAll(string text, ParseMode? mode = null, CancellationToken token = default)
     {
-        await SendText(text, GetAllUsers(), mode, token);
+        IEnumerable<long> users = await GetAllUsers();
+        await SendText(text, users, mode, token);
     }
 
     public async Task SendPNG(long chatId, ImageMessageData data, ParseMode? parseMode = null)
@@ -71,7 +72,7 @@ public class TelegramBotBridge
 
     public async Task SendPNGToAll(ImageMessageData data, ParseMode? parseMode = null)
     {
-        IEnumerable<Task> tasks = GetAllUsers().Select(chatId => SendPNG(chatId, data, parseMode));
+        IEnumerable<Task> tasks = (await GetAllUsers()).Select(chatId => SendPNG(chatId, data, parseMode));
         await Task.WhenAll(tasks);
     }
 
@@ -81,8 +82,8 @@ public class TelegramBotBridge
         return await Task.WhenAll(tasks);
     }
 
-    private IEnumerable<long> GetAllUsers()
+    private async Task<IEnumerable<long>> GetAllUsers()
     {
-        return _userRecordsDump.Execute().Select(user => user.Id);
+        return (await _userRecordsDump.Execute()).Select(user => user.Id);
     }
 }

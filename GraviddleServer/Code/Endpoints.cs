@@ -29,9 +29,9 @@ public class Endpoints
     }
 
     [HttpGet]
-    public string GetAllRecords()
+    public async Task<string> GetAllRecords()
     {
-        IList<LevelRecord> dump = _recordsDump.Execute();
+        IList<LevelRecord> dump = await _recordsDump.Execute();
         return JsonConvert.SerializeObject(dump);
     }
 
@@ -39,7 +39,7 @@ public class Endpoints
     public async Task<IResult> PostLevelRecord([FromBody] LevelRecord levelRecord)
     {
         await _levelRecordNotification.Notify(levelRecord);
-        _recordAdd.Execute(levelRecord);
+        await _recordAdd.Execute(levelRecord);
 
         return Results.Ok(levelRecord);
     }

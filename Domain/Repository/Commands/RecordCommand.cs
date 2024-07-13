@@ -12,8 +12,8 @@ public class RecordCommand<TRecord, TKey> : RecordBaseCommand<TRecord>,
     {
     }
 
-    public void Execute(TRecord element)
+    public async Task Execute(TRecord element)
     {
-        Bridge.ExecuteNonQuery(GetQuery(element));
+        await Bridge.ExecuteNonQuery(GetQuery(element));
     }
 }

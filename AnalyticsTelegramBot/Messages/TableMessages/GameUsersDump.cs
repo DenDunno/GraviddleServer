@@ -14,15 +14,13 @@ public class GameUsersDump : TableMessage
 
     protected override string[] Columns => new[] { "Nickname", "Game id" };
 
-    protected override Task WriteRaws(List<object[]> raws)
+    protected override async Task WriteRaws(List<object[]> raws)
     {
-        List<LevelRecord> gameUsers = _gameUsersDump.Execute();
+        List<LevelRecord> gameUsers = await _gameUsersDump.Execute();
 
         foreach (LevelRecord userRecord in gameUsers)
         {
             raws.Add(new object[] { userRecord.Name, userRecord.Id });
         }
-
-        return Task.CompletedTask;
     }
 }

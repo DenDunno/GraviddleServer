@@ -14,9 +14,9 @@ public class RecordsDumpMessage : TableMessage
 
     protected override string[] Columns => new[] { "Num", "Name", "Stars", "Level", "Time", "DeathCount" };
 
-    protected override Task WriteRaws(List<object[]> raws)
+    protected override async Task WriteRaws(List<object[]> raws)
     {
-        IList<LevelRecord> records = _levelRecordsDump.Execute();
+        IList<LevelRecord> records = await _levelRecordsDump.Execute();
 
         for (int i = 0; i < records.Count; ++i)
         {
@@ -24,7 +24,5 @@ public class RecordsDumpMessage : TableMessage
             raws.Add(new object[]
                 { i + 1, record.Name, record.Stars, record.Level, record.Time, record.DeathCount });
         }
-
-        return Task.CompletedTask;
     }
 }

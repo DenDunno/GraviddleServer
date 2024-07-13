@@ -18,7 +18,7 @@ public class ChartRequest : IPNGProvider
     
     public async Task<byte[]> Evaluate()
     {
-        ChartConfig config = _configProvider.GetConfig();
+        ChartConfig config = await _configProvider.GetConfig();
         
         return await new ChartWrapper()
         {

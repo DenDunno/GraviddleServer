@@ -8,9 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="ConsoleTables" Version="2.6.1" />
       <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-      <PackageReference Include="QuickChart" Version="2.3.0" />
       <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
     </ItemGroup>
 

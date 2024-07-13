@@ -25,7 +25,7 @@ public class SetAdminRoleState : MessageState
     protected override async Task OnEnter(CancellationToken token)
     {
         await _bridge.Delete(_user.Id, _messageId, token);
-        _userUpdate.Execute(_user with { Role = Role.Admin });
+        await _userUpdate.Execute(_user with { Role = Role.Admin });
 
         await base.OnEnter(token);
     }

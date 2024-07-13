@@ -2,8 +2,8 @@ namespace TelegramBotTemplate.StateMachineNM.TransitionNM.Condition;
 
 public class True : ICondition
 {
-    public bool IsTrue()
+    public Task<bool> IsTrue()
     {
-        return true;
+        return Task.FromResult(true);
     }
 }

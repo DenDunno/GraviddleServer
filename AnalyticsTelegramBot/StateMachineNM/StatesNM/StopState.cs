@@ -16,7 +16,7 @@ public class StopState : MessageState
 
     protected override async Task OnEnter(CancellationToken token)
     {
+        await _userRecordRemove.Execute(ChatId);
         await base.OnEnter(token);
-        _userRecordRemove.Execute(ChatId);
     }
 }

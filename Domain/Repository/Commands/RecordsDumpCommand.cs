@@ -18,10 +18,10 @@ public class RecordsDumpCommand<TRecord> : IRecordsDump<TRecord>
         _parser = parser;
     }
 
-    public List<TRecord> Execute()
+    public async Task<List<TRecord>> Execute()
     {
         List<TRecord> elements = new();
-        using IDataReader reader = _bridge.ExecuteReader(_queryProvider.Value);
+        using IDataReader reader = await _bridge.ExecuteReader(_queryProvider.Value);
         
         while (reader.Read())
         {

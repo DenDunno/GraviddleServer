@@ -13,11 +13,11 @@ public class RecordSafeAdd<TRecord, TKey> : IRecordAdd<TRecord, TKey> where TRec
         _recordCommand = recordCommand;
     }
 
-    public void Execute(TRecord element)
+    public async Task Execute(TRecord element)
     {
-        if (_containsCommand.Execute(element.Id) == false)
+        if (await _containsCommand.Execute(element.Id) == false)
         {
-            _recordCommand.Execute(element);
+            await _recordCommand.Execute(element);
         }
     }
 }

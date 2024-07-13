@@ -9,8 +9,11 @@ public class Any : ICondition
         _conditions = conditions;
     }
 
-    public bool IsTrue()
+    public async Task<bool> IsTrue()
     {
-        return _conditions.Any(condition => condition.IsTrue());
+        List<Task<bool>> tasks = _conditions.Select(condition => condition.IsTrue()).ToList();
+        await Task.WhenAll(tasks);
+        
+        return tasks.Any(task => task.Result);
     }
 }

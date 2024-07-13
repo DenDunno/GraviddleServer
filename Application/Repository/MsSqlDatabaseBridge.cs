@@ -18,19 +18,19 @@ public class MsSqlDatabaseBridge : IDatabaseBridge
         _sqlConnection.Open();
     }
 
-    public int ExecuteNonQuery(string query)
+    public async Task<int> ExecuteNonQuery(string query)
     {
-        return CreateCommand(query).ExecuteNonQuery();
+        return await CreateCommand(query).ExecuteNonQueryAsync();
     }
 
-    public int ExecuteScalar(string query)
+    public async Task<int> ExecuteScalar(string query)
     {
-        return (int)CreateCommand(query).ExecuteScalar();
+        return (int)(await CreateCommand(query).ExecuteScalarAsync())!;
     }
 
-    public IDataReader ExecuteReader(string query)
+    public async Task<IDataReader> ExecuteReader(string query)
     {
-        return CreateCommand(query).ExecuteReader();
+        return await CreateCommand(query).ExecuteReaderAsync();
     }
 
     private SqlCommand CreateCommand(string query)

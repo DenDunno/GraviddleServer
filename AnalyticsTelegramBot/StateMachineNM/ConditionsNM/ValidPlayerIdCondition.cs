@@ -14,8 +14,8 @@ public class ValidPlayerIdCondition : ICondition
         _userInput = userInput;
     }
 
-    public bool IsTrue()
+    public async Task<bool> IsTrue()
     {
-        return _gameUserExists.Execute(_userInput);
+        return await _gameUserExists.Execute(_userInput);
     }
 }

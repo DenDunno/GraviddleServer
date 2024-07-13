@@ -4,5 +4,5 @@ namespace AnalyticsTelegramBot.StateMachineNM.StatesNM.StatisticsGeneration;
 
 public interface IConfigProvider
 {
-    ChartConfig GetConfig();
+    Task<ChartConfig> GetConfig();
 }

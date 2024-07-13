@@ -14,8 +14,10 @@ public class RecordsDumpById : IRecordsDump<LevelRecord>
         _id = id;
     }
 
-    public List<LevelRecord> Execute()
+    public async Task<List<LevelRecord>> Execute()
     {
-        return _dump.Execute().Where(record => record.Id == _id).ToList();
+        List<LevelRecord> records = (await _dump.Execute());
+        
+        return records.Where(record => record.Id == _id).ToList();
     }
 }

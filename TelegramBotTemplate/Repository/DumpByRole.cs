@@ -14,9 +14,9 @@ public class DumpByRole : IRecordsDump<long>
         _role = role;
     }
 
-    public List<long> Execute()
+    public async Task<List<long>> Execute()
     {
-        return _usersDump.Execute()
+        return (await _usersDump.Execute())
             .Where(user => user.Role == _role)
             .Select(user => user.Id)
             .ToList();

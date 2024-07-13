@@ -1,6 +1,6 @@
 namespace AnalyticsTelegramBot.Provider;
 
-public interface IProvider<out T>
+public interface IProvider<T>
 {
-    T Provide();
+    Task<T> Provide();
 }

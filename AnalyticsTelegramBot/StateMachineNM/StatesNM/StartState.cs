@@ -19,7 +19,7 @@ public class StartState : MessageState
 
     protected override async Task OnEnter(CancellationToken token)
     {
-        _recordAdd.Execute(_user);
+        await _recordAdd.Execute(_user);
         await base.OnEnter(token);
     }
 }

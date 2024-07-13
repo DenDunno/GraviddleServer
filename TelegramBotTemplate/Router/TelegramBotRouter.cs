@@ -17,21 +17,21 @@ public class TelegramBotRouter
 
     public async Task HandleInput(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
     {
-        foreach (IRouterBranch routerBranch in _routerBranches)
+        try
         {
-            try
+            foreach (IRouterBranch routerBranch in _routerBranches)
             {
                 await routerBranch.Handle(update, cancellationToken);
             }
-            catch (Exception exception)
-            {
-                await _messageLogger.Log(exception.ToString());
-            }
+        }
+        catch (Exception exception)
+        {
+            await _messageLogger.Log(exception.ToString());
         }
     }
 
-    public Task HandleError(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
+    public async Task HandleError(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
     {
-        return Task.CompletedTask;
+        await _messageLogger.Log(exception.ToString());
     }
 }

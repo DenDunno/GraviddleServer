@@ -9,9 +9,9 @@ public class Repositories
     public readonly TelegramUsersRepository TelegramUsers;
     public readonly AnalyticsRepository Analytics;
 
-    public Repositories(AnalyticsRepository analytics, IDatabaseBridge databaseBridge)
+    public Repositories(AnalyticsRepository analytics, IDatabaseBridge bridge)
     {
-        TelegramUsers = new TelegramUserRepositoryFactory(databaseBridge).Create();
+        TelegramUsers = new TelegramUserRepositoryFactory(bridge).Create();
         Analytics = analytics;
     }
 }

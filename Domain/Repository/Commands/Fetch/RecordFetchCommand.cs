@@ -15,12 +15,12 @@ public class RecordFetchCommand<TRecord, TKey> : RecordBaseCommand<TKey>, IRecor
         _parser = parser;
     }
 
-    public bool TryExecute(TKey key, out TRecord record)
+    public async Task<FetchResult<TRecord>> Execute(TKey key)
     {
-        IDataReader reader = Bridge.ExecuteReader(GetQuery(key));
-        record = reader.Read() ? _parser.Parse(reader) : default!;
+        IDataReader reader = await Bridge.ExecuteReader(GetQuery(key));
+        TRecord record = reader.Read() ? _parser.Parse(reader) : default!;
         reader.Close();
         
-        return record != null;
+        return new FetchResult<TRecord>(record != null, record);
     }
 }

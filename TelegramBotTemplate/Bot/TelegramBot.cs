@@ -6,11 +6,11 @@ namespace TelegramBotTemplate.Bot;
 
 public class TelegramBot
 {
-    private readonly TelegramBotRouter _router;
-    private readonly ITelegramBotClient _client;
     public readonly TelegramBotBridge Bridge;
     public readonly IMessageLogger Logger;
-    
+    private readonly TelegramBotRouter _router;
+    private readonly ITelegramBotClient _client;
+
     public TelegramBot(ITelegramBotClient client, TelegramBotBridge bridge, IMessageLogger logger, IRouterBranch[] branches)
     {
         _router = new TelegramBotRouter(branches, logger);

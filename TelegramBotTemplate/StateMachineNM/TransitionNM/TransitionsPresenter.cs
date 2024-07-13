@@ -22,7 +22,7 @@ namespace TelegramBotTemplate.StateMachineNM.TransitionNM
             _transitions[from].Add(new Transition(from, to, condition));
         }
 
-        public IState Transit(IState state)
+        public async Task<IState> Transit(IState state)
         {
             IState newState = state;
 
@@ -30,7 +30,7 @@ namespace TelegramBotTemplate.StateMachineNM.TransitionNM
             {
                 foreach (Transition transition in transitions)
                 {
-                    if (transition.Condition.IsTrue())
+                    if (await transition.Condition.IsTrue())
                     {
                         newState = transition.End;
                         break;

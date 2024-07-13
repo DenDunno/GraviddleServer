@@ -24,13 +24,13 @@ public class Conversation : RouterBranch<Message>
 
     protected override async Task OnHandle(Message message, CancellationToken cancellationToken)
     {
-        TelegramUser user = _userProvider.Create(message.Chat.Id);
+        TelegramUser user = await _userProvider.Create(message.Chat.Id);
         StateMachine stateMachine = _stateMachineFactory.Create(message, user);
         ConversationResult conversationResult = await stateMachine.UpdateConversation(cancellationToken);
 
         if (conversationResult.NewState)
         {
-            _conversationUpdate.Execute(user with { ConversationState = conversationResult.NewStateId });
+            await _conversationUpdate.Execute(user with { ConversationState = conversationResult.NewStateId });
         }
     }
 }

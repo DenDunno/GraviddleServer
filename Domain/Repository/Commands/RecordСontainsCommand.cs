@@ -9,8 +9,8 @@ public class RecordСontainsCommand<TKey> : RecordBaseCommand<TKey>, IRecordCont
     {
     }
 
-    public bool Execute(TKey key)
+    public async Task<bool> Execute(TKey key)
     {
-        return Bridge.ExecuteScalar(GetQuery(key)) > 0;
+        return await Bridge.ExecuteScalar(GetQuery(key)) > 0;
     }
 }
