@@ -1,6 +1,6 @@
 namespace AnalyticsTelegramBot.StateMachineNM.StatesNM.StatisticsGeneration;
 
-public interface IPNGProvider
+public interface IAlbumGeneration
 {
-    Task<byte[]> Evaluate();
+    Task<byte[][]> Generate();
 }

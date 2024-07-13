@@ -4,7 +4,6 @@ using Application;
 using Application.Records;
 using Application.Repository;
 using Domain.Notification;
-using Domain.Repository;
 using GraviddleServer.Code;
 using Microsoft.AspNetCore.Builder;
 using Telegram.Bot.Types.Enums;
@@ -21,7 +20,7 @@ public static class Composition
         return new SecureData(lines[0], lines[1], lines[2]);
     }
 
-    public static TelegramBot CreateTelegramBot(AnalyticsRepository repository, SecureData data, IDatabaseBridge bridge)
+    public static TelegramBot CreateTelegramBot(AnalyticsRepository repository, SecureData data, DatabaseConnection bridge)
     {
         Repositories repositories = new(repository, bridge);
         ITelegramBotFactory telegramBotFactory = new TelegramBotFactory(data, repositories);

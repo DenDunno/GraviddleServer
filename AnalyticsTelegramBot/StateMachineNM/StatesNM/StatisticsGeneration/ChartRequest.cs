@@ -1,24 +1,26 @@
+using AnalyticsTelegramBot.Provider;
 using AnalyticsTelegramBot.StateMachineNM.StatesNM.StatisticsGeneration.Data;
 using Newtonsoft.Json;
+using TelegramBotTemplate.Utils;
 
 namespace AnalyticsTelegramBot.StateMachineNM.StatesNM.StatisticsGeneration;
 
 public class ChartRequest : IPNGProvider
 {
-    private readonly IConfigProvider _configProvider;
+    private readonly IProvider<ChartConfig> _configProvider;
     private readonly int _width;
     private readonly int _height;
 
-    public ChartRequest(IConfigProvider configProvider, int width = 500, int height = 300)
+    public ChartRequest(IProvider<ChartConfig> configProvider, int width = 500, int height = 300)
     {
         _configProvider = configProvider;
         _height = height;
         _width = width;
     }
     
-    public async Task<byte[]> Evaluate()
+    public async Task<byte[]> Provide()
     {
-        ChartConfig config = await _configProvider.GetConfig();
+        ChartConfig config = await _configProvider.Provide();
         
         return await new ChartWrapper()
         {

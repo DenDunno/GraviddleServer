@@ -15,19 +15,19 @@ namespace AnalyticsTelegramBot;
 public class TelegramBotFactory : ITelegramBotFactory
 {
     private readonly Repositories _repositories;
-    private readonly SecureData _secureData;
+    private readonly SecureData _data;
 
-    public TelegramBotFactory(SecureData secureData, Repositories repositories)
+    public TelegramBotFactory(SecureData data, Repositories repositories)
     {
         _repositories = repositories;
-        _secureData = secureData;
+        _data = data;
     }
 
     public TelegramBot Create()
     {
-        ITelegramBotClient client = new TelegramBotClient(_secureData.TelegramBotToken);
+        ITelegramBotClient client = new TelegramBotClient(_data.TelegramBotToken);
         TelegramBotBridge botBridge = new(client, _repositories.TelegramUsers.Dump);
-        IStateMachineFactory stateMachineFactory = new BotStateMachineFactory(_repositories, botBridge, _secureData.AdminPassword);
+        IStateMachineFactory stateMachineFactory = new BotStateMachineFactory(_repositories, botBridge, _data.AdminPassword);
         ITelegramUserProvider telegramUserProvider = new TelegramUserProvider(_repositories.TelegramUsers.Fetch);
         IMessageLogger messageLogger = new BotAdminMessageLogger(botBridge, _repositories.TelegramUsers.AdminsDump);
 

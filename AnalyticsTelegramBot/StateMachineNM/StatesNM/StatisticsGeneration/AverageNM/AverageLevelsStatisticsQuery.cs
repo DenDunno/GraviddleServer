@@ -1,10 +1,11 @@
+using AnalyticsTelegramBot.Provider;
 using AnalyticsTelegramBot.StateMachineNM.StatesNM.StatisticsGeneration.Data;
 using Application.Records;
 using Domain.Repository.Commands.Contract;
 
 namespace AnalyticsTelegramBot.StateMachineNM.StatesNM.StatisticsGeneration.AverageNM;
 
-public class AverageLevelsStatisticsQuery : IConfigProvider
+public class AverageLevelsStatisticsQuery : IProvider<ChartConfig>
 {
     private readonly IRecordsDump<LevelRecord> _recordsDump;
     private readonly Func<LevelRecord, double> _observation;
@@ -19,7 +20,7 @@ public class AverageLevelsStatisticsQuery : IConfigProvider
         _color = color;
     }
 
-    public async Task<ChartConfig> GetConfig()
+    public async Task<ChartConfig> Provide()
     {
         List<LevelRecord> records = await _recordsDump.Execute();
         Dictionary<int, string> levelNamesMap = GetLevelNamesMap(records);

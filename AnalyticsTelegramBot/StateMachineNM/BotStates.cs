@@ -36,13 +36,13 @@ public class BotStates : States
         Add(Stop = new StopState(bridge, user.Id, repositories.TelegramUsers.Remove));
         Add(SetAdminRole = new SetAdminRoleState(input.MessageId, user, bridge, repositories.TelegramUsers.UpdateRole));
         Add(Messages = new MessageStates(bridge, user.Id, repositories));
-        Add(GenerateAverageStatistics = new GenerateStatisticsState(bridge, user,
-            new QuickChartStatisticsGeneration(
+        Add(GenerateAverageStatistics = new AlbumState(bridge, user.Id,
+            new QuickChartAlbumGeneration(
                 new ConstantProvider<string>("Average"), 
                 repositories.Analytics.Dump)));
 
-        Add(GenerateStatisticsByPlayer = new GenerateStatisticsState(bridge, user,
-            new QuickChartStatisticsGeneration(
+        Add(GenerateStatisticsByPlayer = new AlbumState(bridge, user.Id,
+            new QuickChartAlbumGeneration(
                 new NameByIdProvider(input.Text!, repositories.Analytics.Fetch),
                 new RecordsDumpById(input.Text!, repositories.Analytics.Dump))));
     }

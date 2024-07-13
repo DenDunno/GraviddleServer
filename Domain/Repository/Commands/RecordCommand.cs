@@ -1,3 +1,4 @@
+using Application.Repository;
 using Domain.Repository.Commands.Contract;
 using Domain.Repository.Query;
 
@@ -8,12 +9,13 @@ public class RecordCommand<TRecord, TKey> : RecordBaseCommand<TRecord>,
     IRecordUpdate<TRecord> 
     where TRecord : IDatabaseModel<TKey>
 {
-    public RecordCommand(IDatabaseBridge bridge, IQueryBuilder<TRecord> queryBuilder) : base(bridge, queryBuilder)
+    public RecordCommand(DatabaseConnection connection, IQueryBuilder<TRecord> queryBuilder) : base(connection, queryBuilder)
     {
     }
 
     public async Task Execute(TRecord element)
     {
-        await Bridge.ExecuteNonQuery(GetQuery(element));
+        using IDatabaseBridge bridge = Connection.Open();
+        await bridge.ExecuteNonQuery(GetQuery(element));
     }
 }

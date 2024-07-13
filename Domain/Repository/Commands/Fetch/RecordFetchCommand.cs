@@ -1,4 +1,5 @@
 using System.Data;
+using Application.Repository;
 using Domain.Parser;
 using Domain.Repository.Commands.Contract;
 using Domain.Repository.Query;
@@ -9,15 +10,16 @@ public class RecordFetchCommand<TRecord, TKey> : RecordBaseCommand<TKey>, IRecor
 {
     private readonly IRecordParser<TRecord> _parser;
     
-    public RecordFetchCommand(IDatabaseBridge bridge, IRecordParser<TRecord> parser, IQueryBuilder<TKey> queryBuilder) 
-        : base(bridge, queryBuilder)
+    public RecordFetchCommand(DatabaseConnection connection, IRecordParser<TRecord> parser, IQueryBuilder<TKey> queryBuilder) 
+        : base(connection, queryBuilder)
     {
         _parser = parser;
     }
 
     public async Task<FetchResult<TRecord>> Execute(TKey key)
     {
-        IDataReader reader = await Bridge.ExecuteReader(GetQuery(key));
+        using IDatabaseBridge bridge = Connection.Open();
+        IDataReader reader = await bridge.ExecuteReader(GetQuery(key));
         TRecord record = reader.Read() ? _parser.Parse(reader) : default!;
         reader.Close();
         

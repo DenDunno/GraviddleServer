@@ -1,7 +1,7 @@
+using AnalyticsTelegramBot.Provider;
 using Application.Records;
 using Application.Repository.Parser;
 using Domain.Factory;
-using Domain.Repository;
 using Domain.Repository.Commands;
 using Domain.Repository.Query;
 
@@ -9,11 +9,11 @@ namespace Application.Repository;
 
 public class AnalyticsRepositoryFactory : IFactory<AnalyticsRepository>
 {
-    private readonly IDatabaseBridge _bridge;
+    private readonly DatabaseConnection _dbConnection;
 
-    public AnalyticsRepositoryFactory(IDatabaseBridge bridge)
+    public AnalyticsRepositoryFactory(DatabaseConnection dbConnection)
     {
-        _bridge = bridge;
+        _dbConnection = dbConnection;
     }
     
     public AnalyticsRepository Create()
@@ -23,11 +23,11 @@ public class AnalyticsRepositoryFactory : IFactory<AnalyticsRepository>
         
         return new AnalyticsRepository
         {
-            Add = new RecordCommand<LevelRecord, string>(_bridge, new QueryBuilder<LevelRecord>(queries.Insert)),
-            Dump = new RecordsDumpCommand<LevelRecord>(_bridge, parser, new QueryProvider(queries.GetAll())),
-            Contains = new RecordСontainsCommand<string>(_bridge, new QueryBuilder<string>(queries.Contains)),
-            GameUsersDump = new RecordsDumpCommand<LevelRecord>(_bridge, parser, new QueryProvider(queries.GetUsers())),
-            Fetch = new RecordFetchCommand<LevelRecord, string>(_bridge, parser, new QueryBuilder<string>(queries.Fetch))
+            Add = new RecordCommand<LevelRecord, string>(_dbConnection, new QueryBuilder<LevelRecord>(queries.Insert)),
+            Dump = new RecordsDumpCommand<LevelRecord>(_dbConnection, parser, new ConstantProvider<string>(queries.GetAll())),
+            Contains = new RecordСontainsCommand<string>(_dbConnection, new QueryBuilder<string>(queries.Contains)),
+            GameUsersDump = new RecordsDumpCommand<LevelRecord>(_dbConnection, parser, new ConstantProvider<string>(queries.GetUsers())),
+            Fetch = new RecordFetchCommand<LevelRecord, string>(_dbConnection, parser, new QueryBuilder<string>(queries.Fetch))
         };
     }
 }
