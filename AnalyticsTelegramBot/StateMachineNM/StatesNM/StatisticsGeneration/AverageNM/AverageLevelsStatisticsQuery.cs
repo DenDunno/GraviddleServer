@@ -1,6 +1,6 @@
-using AnalyticsTelegramBot.Provider;
 using AnalyticsTelegramBot.StateMachineNM.StatesNM.StatisticsGeneration.Data;
 using Application.Records;
+using Domain.Provider;
 using Domain.Repository.Commands.Contract;
 
 namespace AnalyticsTelegramBot.StateMachineNM.StatesNM.StatisticsGeneration.AverageNM;

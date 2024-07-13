@@ -3,9 +3,12 @@ using AnalyticsTelegramBot.Messages.Formatter;
 using Application;
 using Application.Records;
 using Application.Repository;
+using Application.SecureData;
 using Domain.Notification;
+using Domain.Repository;
 using GraviddleServer.Code;
 using Microsoft.AspNetCore.Builder;
+using Newtonsoft.Json;
 using Telegram.Bot.Types.Enums;
 using TelegramBotTemplate.Bot;
 using TelegramBotTemplate.Notification;
@@ -16,8 +19,10 @@ public static class Composition
 {
     public static SecureData FetchSecureData()
     {
-        string[] lines = File.ReadAllLines("password.txt");
-        return new SecureData(lines[0], lines[1], lines[2]);
+        string text = File.ReadAllText("password.env");
+        IEncryption encryption = new AesEncryption();
+        string json = encryption.Decrypt(text, key: "770A8A65DA156D24EE2A093277530142");
+        return JsonConvert.DeserializeObject<SecureData>(json)!;
     }
 
     public static TelegramBot CreateTelegramBot(AnalyticsRepository repository, SecureData data, DatabaseConnection bridge)

@@ -1,8 +1,10 @@
-using AnalyticsTelegramBot.Provider;
 using Application.Records;
 using Application.Repository.Parser;
 using Domain.Factory;
+using Domain.Provider;
+using Domain.Repository;
 using Domain.Repository.Commands;
+using Domain.Repository.Commands.Fetch;
 using Domain.Repository.Query;
 
 namespace Application.Repository;

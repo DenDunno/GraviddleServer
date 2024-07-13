@@ -1,4 +1,3 @@
-using Application.Repository;
 using Domain.Repository.Commands.Contract;
 using Domain.Repository.Query;
 

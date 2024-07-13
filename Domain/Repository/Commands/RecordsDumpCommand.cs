@@ -1,7 +1,6 @@
 using System.Data;
-using AnalyticsTelegramBot.Provider;
-using Application.Repository;
 using Domain.Parser;
+using Domain.Provider;
 using Domain.Repository.Commands.Contract;
 
 namespace Domain.Repository.Commands;

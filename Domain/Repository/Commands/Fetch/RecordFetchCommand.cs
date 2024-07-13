@@ -1,10 +1,9 @@
 using System.Data;
-using Application.Repository;
 using Domain.Parser;
 using Domain.Repository.Commands.Contract;
 using Domain.Repository.Query;
 
-namespace Domain.Repository.Commands;
+namespace Domain.Repository.Commands.Fetch;
 
 public class RecordFetchCommand<TRecord, TKey> : RecordBaseCommand<TKey>, IRecordFetch<TRecord, TKey> 
 {

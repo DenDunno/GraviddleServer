@@ -13,7 +13,7 @@
     </ItemGroup>
 
 <ItemGroup>
-  <None Update="password.txt">
+  <None Update="password.env">
     <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
   </None>
 </ItemGroup>

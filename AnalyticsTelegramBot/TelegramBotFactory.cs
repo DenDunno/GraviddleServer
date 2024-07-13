@@ -1,5 +1,5 @@
 using AnalyticsTelegramBot.StateMachineNM;
-using Application;
+using Application.SecureData;
 using Domain.Logger;
 using Telegram.Bot;
 using Telegram.Bot.Types.Enums;

@@ -1,7 +1,6 @@
 using Domain.Factory;
-using Domain.Repository;
 
-namespace Application.Repository;
+namespace Domain.Repository;
 
 public class DatabaseConnection
 {

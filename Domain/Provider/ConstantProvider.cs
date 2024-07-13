@@ -1,4 +1,4 @@
-namespace AnalyticsTelegramBot.Provider;
+namespace Domain.Provider;
 
 public class ConstantProvider<T> : IProvider<T>
 {

@@ -1,6 +1,7 @@
 using Application.Records;
-using Domain.Repository.Commands;
+using Domain.Provider;
 using Domain.Repository.Commands.Contract;
+using Domain.Repository.Commands.Fetch;
 
 namespace AnalyticsTelegramBot.Provider;
 

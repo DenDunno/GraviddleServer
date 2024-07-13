@@ -2,9 +2,11 @@ using AnalyticsTelegramBot.Provider;
 using AnalyticsTelegramBot.StateMachineNM.StatesNM;
 using AnalyticsTelegramBot.StateMachineNM.StatesNM.StatisticsGeneration;
 using Application.Repository;
+using Domain.Provider;
 using Telegram.Bot.Types;
 using TelegramBotTemplate.Bot;
 using TelegramBotTemplate.StateMachineNM.State;
+using TelegramBotTemplate.StateMachineNM.State.AlbumState;
 using TelegramBotTemplate.User;
 
 namespace AnalyticsTelegramBot.StateMachineNM;

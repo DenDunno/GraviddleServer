@@ -1,5 +1,5 @@
-using Domain.Repository.Commands;
 using Domain.Repository.Commands.Contract;
+using Domain.Repository.Commands.Fetch;
 
 namespace TelegramBotTemplate.User;
 

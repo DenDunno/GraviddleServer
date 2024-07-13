@@ -1,4 +1,4 @@
-namespace AnalyticsTelegramBot.StateMachineNM.StatesNM.StatisticsGeneration;
+namespace TelegramBotTemplate.StateMachineNM.State.AlbumState;
 
 public interface IAlbumGeneration
 {

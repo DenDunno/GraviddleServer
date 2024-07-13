@@ -1,7 +1,8 @@
-using AnalyticsTelegramBot.Provider;
-using Application.Repository;
 using Domain.Factory;
+using Domain.Provider;
+using Domain.Repository;
 using Domain.Repository.Commands;
+using Domain.Repository.Commands.Fetch;
 using Domain.Repository.Query;
 using TelegramBotTemplate.User;
 

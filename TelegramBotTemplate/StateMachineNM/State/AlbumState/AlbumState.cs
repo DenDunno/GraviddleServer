@@ -1,8 +1,6 @@
-using AnalyticsTelegramBot.StateMachineNM.StatesNM.StatisticsGeneration;
 using TelegramBotTemplate.Bot;
-using TelegramBotTemplate.StateMachineNM.State;
 
-namespace AnalyticsTelegramBot.StateMachineNM.StatesNM;
+namespace TelegramBotTemplate.StateMachineNM.State.AlbumState;
 
 public class AlbumState : BaseState
 {

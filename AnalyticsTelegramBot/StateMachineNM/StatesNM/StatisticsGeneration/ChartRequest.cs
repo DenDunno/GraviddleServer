@@ -1,7 +1,6 @@
-using AnalyticsTelegramBot.Provider;
 using AnalyticsTelegramBot.StateMachineNM.StatesNM.StatisticsGeneration.Data;
+using Domain.Provider;
 using Newtonsoft.Json;
-using TelegramBotTemplate.Utils;
 
 namespace AnalyticsTelegramBot.StateMachineNM.StatesNM.StatisticsGeneration;
 

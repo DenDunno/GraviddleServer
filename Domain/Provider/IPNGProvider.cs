@@ -1,6 +1,4 @@
-using AnalyticsTelegramBot.Provider;
-
-namespace TelegramBotTemplate.Utils;
+namespace Domain.Provider;
 
 public interface IPNGProvider : IProvider<byte[]>
 {

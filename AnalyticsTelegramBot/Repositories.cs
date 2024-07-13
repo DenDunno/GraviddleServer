@@ -1,4 +1,5 @@
 using Application.Repository;
+using Domain.Repository;
 using TelegramBotTemplate.Repository;
 
 namespace AnalyticsTelegramBot;
