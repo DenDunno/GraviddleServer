@@ -25,7 +25,7 @@ public class Endpoints
     [HttpGet]
     public string Greet()
     {
-        return "Hey there, what are doing here?";
+        return "Hey there, what are you doing here?";
     }
 
     [HttpGet]

@@ -6,4 +6,7 @@ How to publish?
 *When pasting, skip duplicate files (use GraviddleServer files)*
 4. Important: change web.config file. Change arguments=".\GraviddleServer.dll" to arguments=".\CompositionRoot.dll"
 
+OR
+run publish.ps1
+
 Done :)
