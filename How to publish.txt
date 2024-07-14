@@ -1,0 +1,9 @@
+How to publish?
+
+1. Publish GraviddleServer as folder (Target runtime: Portable)
+2. Publish CompositionRoot as folder (Target runtime: Portable)
+3. Copy-paste CompositionRoot publish into GraviddleServer publish
+*When pasting, skip duplicate files (use GraviddleServer files)*
+4. Important: change web.config file. Change arguments=".\GraviddleServer.dll" to arguments=".\CompositionRoot.dll"
+
+Done :)
