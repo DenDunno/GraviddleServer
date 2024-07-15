@@ -29,6 +29,7 @@ public class Endpoints
     }
 
     [HttpGet]
+    [Route("/all")]
     public async Task<string> GetAllRecords()
     {
         IList<LevelRecord> dump = await _recordsDump.Execute();
@@ -36,6 +37,7 @@ public class Endpoints
     }
 
     [HttpPost]
+    [Route("/postLevelRecord")]
     public async Task<IResult> PostLevelRecord([FromBody] LevelRecord levelRecord)
     {
         await _levelRecordNotification.Notify(levelRecord);
@@ -45,6 +47,7 @@ public class Endpoints
     }
 
     [HttpPost]
+    [Route("/postDeathRecord")]
     public async Task<IResult> PostDeathRecord([FromBody] DeathRecord deathRecord)
     {
         await _deathRecordNotification.Notify(deathRecord);
