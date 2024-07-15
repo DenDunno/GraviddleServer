@@ -37,7 +37,7 @@ public static class Composition
     public static WebApplication CreateWebApplication(TelegramBot bot, AnalyticsRepository repository, string serverName)
     {
         WebApplication app = BuildApp();
-        ScheduleServerRefresh(bot, app, serverName);
+        ScheduleServerRefresh(app, serverName);
         SetupEndpoints(bot, repository, app);
         
         return app;
@@ -50,9 +50,9 @@ public static class Composition
         return builder.Build();
     }
 
-    private static void ScheduleServerRefresh(TelegramBot bot, WebApplication app, string serverName)
+    private static void ScheduleServerRefresh(WebApplication app, string serverName)
     {
-        ServerRefresh serverRefresh = new(bot.Logger, serverName);
+        ServerRefresh serverRefresh = new(serverName);
         ISchedulerBuilder schedulerBuilder = new FifteenMinutesSchedule(serverRefresh);
         app.Services.UseScheduler(scheduler => schedulerBuilder.Build(scheduler));
     }
